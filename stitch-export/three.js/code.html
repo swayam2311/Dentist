@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_THREEJS_START:ANIMATION_20 class="fixed inset-0 w-full h-full bg-transparent" -->
+<div class="fixed inset-0 w-full h-full bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_20" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_20');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  # Gangal Dental Clinic — Next.js Implementation Guide & Codebase Architecture
+
+This project is a high-fidelity implementation of the **Gangal Dental Clinic** website built with **Next.js (App Router)**, **TypeScript**, **Tailwind CSS**, **Lenis + GSAP ScrollTrigger**, **Anime.js**, **Three.js (WebGL)**, and **Supabase Database & API**.
+
+---
+
+## 1. Architecture & Tech Stack
+
+```text
+gangal-dental-clinic/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx                # Global layout, fonts, Lenis smooth scroll provider
+│   │   ├── page.tsx                  # Home page (Three.js Hero, Animated Timeline, Testimonials, Map)
+│   │   ├── treatments/page.tsx       # Treatments catalog with category filters
+│   │   ├── book/page.tsx             # 4-Step Interactive Appointment Booking Flow (Supabase integration)
+│   │   ├── book/confirmed/page.tsx   # Booking Confirmation & Add-to-Calendar screen
+│   │   ├── our-team/page.tsx         # Our Team & Staff bios
+│   │   ├── new-patients/page.tsx     # 5-step unhurried journey & first-visit FAQs
+│   │   ├── contact/page.tsx          # Contact coordinates & quick consultation form
+│   │   └── api/
+│   │       └── appointments/route.ts # Supabase server endpoint with validation
+│   ├── components/
+│   │   ├── 3d/
+│   │   │   └── DentalModelViewer.tsx # Three.js interactive molar & titanium implant model + poster fallback
+│   │   ├── motion/
+│   │   │   ├── SmoothScrollProvider.tsx # Lenis + GSAP ScrollTrigger synchronization
+│   │   │   ├── AnimatedIcon.tsx         # Anime.js / SVG path draw-in triggers
+│   │   │   └── JourneyTimeline.tsx      # SVG path with traveling tooth marker synced to scroll
+│   │   ├── navigation/
+│   │   │   ├── Header.tsx            # Floating pill navbar
+│   │   │   └── Footer.tsx            # Sanctuary footer with credentials & hours
+│   │   └── ui/
+│   │       ├── Button.tsx
+│   │       └── Card.tsx
+│   ├── lib/
+│   │   ├── supabase.ts               # Supabase browser & server client
+│   │   └── types.ts                  # Schema definitions & form validation
+│   ├── styles/
+│   │   └── globals.css               # Design tokens, fonts, custom utility animations
+│   └── tailwind.config.ts
+├── supabase/
+│   └── schema.sql                    # SQL migration for appointments & audit log
+└── package.json
+```
+
+---
+
+## 2. Dependencies (`package.json`)
+
+```json
+{
+  "name": "gangal-dental-clinic",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@studio-freight/lenis": "^1.0.42",
+    "@supabase/supabase-js": "^2.45.0",
+    "animejs": "^3.2.2",
+    "clsx": "^2.1.1",
+    "gsap": "^3.12.5",
+    "lucide-react": "^0.453.0",
+    "next": "^14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.5.4",
+    "three": "^0.169.0"
+  },
+  "devDependencies": {
+    "@types/animejs": "^3.1.12",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/three": "^0.169.0",
+    "autoprefixer": "^10.0.1",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
+```
+
+---
+
+## 3. Tailwind Configuration (`tailwind.config.ts`)
+
+```typescript
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        sanctuary: {
+          teal: {
+            DEFAULT: '#1b6b6f',
+            dark: '#144e51',
+            light: '#2a8b90',
+            surface: '#edfcff',
+            container: '#dbf9ff',
+            dim: '#c0e0e6',
+          },
+          porcelain: '#f8fafb',
+          sage: '#e2ece9',
+          brass: '#bfa15f',
+          charcoal: '#1c2826',
+          muted: '#5e716e',
+          border: '#d2e4e2',
+        }
+      },
+      fontFamily: {
+        serif: ['var(--font-newsreader)', 'Georgia', 'serif'],
+        sans: ['var(--font-manrope)', 'sans-serif'],
+      },
+      borderRadius: {
+        'pill': '9999px',
+        '3xl': '1.75rem',
+        '4xl': '2.25rem',
+      },
+      boxShadow: {
+        'soft': '0 8px 30px rgba(27, 107, 111, 0.06)',
+        'float': '0 16px 40px rgba(27, 107, 111, 0.1)',
+      }
+    },
+  },
+  plugins: [],
+};
+export default config;
+```
+
+---
+
+## 4. Supabase Schema (`supabase/schema.sql`)
+
+```sql
+-- Enable UUID extension
+create extension if not exists "uuid-ossp";
+
+-- Table: Appointments
+create table public.appointments (
+  id uuid primary key default uuid_generate_v4(),
+  reference_code text unique not null,
+  patient_name text not null,
+  mobile text not null,
+  email text not null,
+  service text not null,
+  doctor_preference text default 'Dr. Anand Gangal',
+  preferred_date date not null,
+  preferred_time_slot text not null,
+  notes text,
+  status text not null default 'pending_confirmation' check (status in ('pending_confirmation', 'confirmed', 'cancelled', 'completed')),
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Index for lookup by code and phone
+create index idx_appointments_reference on public.appointments(reference_code);
+create index idx_appointments_mobile on public.appointments(mobile);
+
+-- Enable RLS
+alter table public.appointments enable row level security;
+
+-- Policy: Patients can insert an appointment anonymously
+create policy "Allow anonymous appointment booking"
+  on public.appointments
+  for insert
+  to anon
+  with check (true);
+
+-- Policy: Patients can view their confirmed booking via reference code
+create policy "Allow reading appointment by reference code"
+  on public.appointments
+  for select
+  to anon
+  using (true);
+```
+
+---
+
+## 5. Supabase Client & Server Route
+
+### `src/lib/supabase.ts`
+```typescript
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+export function generateBookingRef(): string {
+  const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+  let result = 'GDC-';
+  for (let i = 0; i < 4; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+```
+
+### `src/app/api/appointments/route.ts`
+```typescript
+import { NextResponse } from 'next/server';
+import { supabase, generateBookingRef } from '@/lib/supabase';
+
+export async function POST(request: Request) {
+  try {
+    const payload = await request.json();
+    const { name, mobile, email, service, date, timeSlot, notes } = payload;
+
+    if (!name || !mobile || !email || !service || !date || !timeSlot) {
+      return NextResponse.json({ error: 'Missing required appointment fields' }, { status: 400 });
+    }
+
+    const reference_code = generateBookingRef();
+
+    const { data, error } = await supabase
+      .from('appointments')
+      .insert([
+        {
+          reference_code,
+          patient_name: name,
+          mobile,
+          email,
+          service,
+          preferred_date: date,
+          preferred_time_slot: timeSlot,
+          notes: notes || '',
+          status: 'pending_confirmation'
+        }
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Supabase error:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true, appointment: data }, { status: 201 });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message || 'Internal server error' }, { status: 500 });
+  }
+}
+```
+
+---
+
+## 6. Lenis + GSAP ScrollTrigger Integration
+
+### `src/components/motion/SmoothScrollProvider.tsx`
+```tsx
+'use client';
+
+import React, { useEffect, useRef } from 'react';
+import Lenis from '@studio-freight/lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+export default function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
+  const lenisRef = useRef<Lenis | null>(null);
+
+  useEffect(() => {
+    // Respect reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 0.9,
+    });
+    lenisRef.current = lenis;
+
+    // Sync Lenis scroll updates with GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+      gsap.ticker.remove((time) => lenis.raf(time * 1000));
+    };
+  }, []);
+
+  return <>{children}</>;
+}
+```
+
+---
+
+## 7. Interactive Three.js Molar & Titanium Implant
+
+### `src/components/3d/DentalModelViewer.tsx`
+```tsx
+'use client';
+
+import React, { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
+
+export default function DentalModelViewer() {
+  const mountRef = useRef<HTMLDivElement>(null);
+  const [activeCallout, setActiveCallout] = useState<'crown' | 'post' | 'bone'>('crown');
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setPrefersReducedMotion(isReduced);
+
+    const container = mountRef.current;
+    if (!container) return;
+
+    const width = container.clientWidth || 480;
+    const height = container.clientHeight || 480;
+
+    // Scene & Camera
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+    camera.position.set(0, 0.4, 4.2);
+
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.1;
+    container.appendChild(renderer.domElement);
+
+    // Studio Lighting setup for realistic porcelain & brushed metal
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+    scene.add(ambientLight);
+
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    keyLight.position.set(3, 4, 3);
+    scene.add(keyLight);
+
+    const fillLight = new THREE.DirectionalLight(0xd9f6f7, 0.8);
+    fillLight.position.set(-3, 1, 2);
+    scene.add(fillLight);
+
+    const rimLight = new THREE.DirectionalLight(0xfffaed, 0.9);
+    rimLight.position.set(0, -3, -2);
+    scene.add(rimLight);
+
+    // Model Group
+    const modelGroup = new THREE.Group();
+
+    // 1. Ceramic Crown (Porcelain E-max aesthetic)
+    const crownMat = new THREE.MeshPhysicalMaterial({
+      color: 0xfdfdfd,
+      roughness: 0.15,
+      metalness: 0.02,
+      transmission: 0.28,
+      thickness: 0.8,
+      ior: 1.52,
+      clearcoat: 0.95,
+      clearcoatRoughness: 0.1,
+    });
+
+    const crownGeo = new THREE.CylinderGeometry(0.72, 0.55, 0.95, 32);
+    const crownMesh = new THREE.Mesh(crownGeo, crownMat);
+    crownMesh.position.y = 0.58;
+    modelGroup.add(crownMesh);
+
+    // Cusp sculpt details
+    const cuspGeo = new THREE.SphereGeometry(0.28, 24, 24);
+    const offsets = [
+      [-0.32, 0.42], [0.32, 0.42],
+      [-0.32, -0.42], [0.32, -0.42]
+    ];
+    offsets.forEach(([x, z]) => {
+      const cusp = new THREE.Mesh(cuspGeo, crownMat);
+      cusp.position.set(x, 0.98, z);
+      cusp.scale.set(1, 0.6, 1);
+      modelGroup.add(cusp);
+    });
+
+    // 2. Grade IV Titanium Abutment & Screw Post
+    const titaniumMat = new THREE.MeshStandardMaterial({
+      color: 0x98a2a6,
+      metalness: 0.85,
+      roughness: 0.32,
+    });
+
+    // Abutment collar
+    const collarGeo = new THREE.CylinderGeometry(0.55, 0.42, 0.25, 32);
+    const collarMesh = new THREE.Mesh(collarGeo, titaniumMat);
+    collarMesh.position.y = 0.05;
+    modelGroup.add(collarMesh);
+
+    // Threaded Post
+    const postGeo = new THREE.CylinderGeometry(0.38, 0.22, 1.2, 32);
+    const postMesh = new THREE.Mesh(postGeo, titaniumMat);
+    postMesh.position.y = -0.6;
+    modelGroup.add(postMesh);
+
+    // Thread rings
+    for (let i = 0; i < 6; i++) {
+      const ringGeo = new THREE.TorusGeometry(0.33 - i * 0.02, 0.035, 12, 32);
+      const ring = new THREE.Mesh(ringGeo, titaniumMat);
+      ring.rotation.x = Math.PI / 2;
+      ring.position.y = -0.25 - i * 0.16;
+      modelGroup.add(ring);
+    }
+
+    // 3. Bone Matrix / Gingiva Base
+    const boneMat = new THREE.MeshPhysicalMaterial({
+      color: 0xe28f84,
+      roughness: 0.45,
+      transmission: 0.15,
+      thickness: 0.4,
+    });
+    const boneGeo = new THREE.CylinderGeometry(1.05, 0.95, 0.7, 32);
+    const boneMesh = new THREE.Mesh(boneGeo, boneMat);
+    boneMesh.position.y = -1.1;
+    modelGroup.add(boneMesh);
+
+    scene.add(modelGroup);
+
+    // Interactive mouse rotation tracking
+    let targetRotY = 0;
+    let targetRotX = 0;
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      const normX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const normY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+      targetRotY = normX * 0.6;
+      targetRotX = normY * 0.25;
+    };
+    container.addEventListener('mousemove', onMouseMove);
+
+    // Animation Loop
+    let animationFrameId: number;
+    let clock = new THREE.Clock();
+
+    const animate = () => {
+      animationFrameId = requestAnimationFrame(animate);
+      const elapsed = clock.getElapsedTime();
+
+      if (!isReduced) {
+        // Slow float & breathing oscillation
+        modelGroup.position.y = Math.sin(elapsed * 0.8) * 0.08;
+        modelGroup.rotation.y += (targetRotY + Math.sin(elapsed * 0.4) * 0.15 - modelGroup.rotation.y) * 0.05;
+        modelGroup.rotation.x += (targetRotX - modelGroup.rotation.x) * 0.05;
+      }
+
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    const onResize = () => {
+      if (!container) return;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', onResize);
+      container.removeEventListener('mousemove', onMouseMove);
+      renderer.dispose();
+      if (renderer.domElement && renderer.domElement.parentNode) {
+        renderer.domElement.parentNode.removeChild(renderer.domElement);
+      }
+    };
+  }, []);
+
+  return (
+    <div className="relative w-full aspect-square max-w-[500px] mx-auto rounded-3xl bg-gradient-to-b from-sanctuary-teal-container/40 via-white/80 to-sanctuary-teal-surface/60 border border-sanctuary-border/60 shadow-float backdrop-blur-md p-4 overflow-hidden">
+      {/* 3D Canvas Mount */}
+      <div ref={mountRef} className="w-full h-full cursor-grab active:cursor-grabbing" />
+
+      {/* Floating Interactive Micro-Callouts */}
+      <div className="absolute top-6 right-6">
+        <button
+          onClick={() => setActiveCallout('crown')}
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium tracking-tight shadow-sm transition-all duration-300 ${
+            activeCallout === 'crown'
+              ? 'bg-sanctuary-teal text-white ring-2 ring-sanctuary-teal/30 scale-105'
+              : 'bg-white/90 text-sanctuary-charcoal hover:bg-white'
+          }`}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+          Biocompatible Ceramic Crown
+        </button>
+      </div>
+
+      <div className="absolute top-[48%] left-4">
+        <button
+          onClick={() => setActiveCallout('post')}
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium tracking-tight shadow-sm transition-all duration-300 ${
+            activeCallout === 'post'
+              ? 'bg-sanctuary-teal text-white ring-2 ring-sanctuary-teal/30 scale-105'
+              : 'bg-white/90 text-sanctuary-charcoal hover:bg-white'
+          }`}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+          Grade IV Titanium Post
+        </button>
+      </div>
+
+      <div className="absolute bottom-6 right-6">
+        <button
+          onClick={() => setActiveCallout('bone')}
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium tracking-tight shadow-sm transition-all duration-300 ${
+            activeCallout === 'bone'
+              ? 'bg-sanctuary-teal text-white ring-2 ring-sanctuary-teal/30 scale-105'
+              : 'bg-white/90 text-sanctuary-charcoal hover:bg-white'
+          }`}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-teal-400" />
+          Osteointegrated Base
+        </button>
+      </div>
+
+      {/* Static Fallback for reduced motion / low power */}
+      {prefersReducedMotion && (
+        <div className="absolute bottom-2 left-4 text-[11px] text-sanctuary-muted bg-white/80 px-2 py-0.5 rounded">
+          Static 3D Rendering (Reduced motion enabled)
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+---
+
+## 8. Anime.js Journey Timeline & Icon Draw-In
+
+### `src/components/motion/JourneyTimeline.tsx`
+```tsx
+'use client';
+
+import React, { useEffect, useRef } from 'react';
+import anime from 'animejs';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const steps = [
+  {
+    num: '01',
+    title: 'First contact',
+    desc: 'A warm, zero-pressure phone or WhatsApp chat to understand your preferences and sensory comfort.',
+  },
+  {
+    num: '02',
+    title: 'Consultation',
+    desc: 'Gentle examination, 3D low-radiation digital scans, and co-created transparent care alternatives.',
+  },
+  {
+    num: '03',
+    title: 'Clear plan',
+    desc: 'Transparent upfront treatment estimates with itemized clarity. No surprise fees or rushed decisions.',
+  },
+  {
+    num: '04',
+    title: 'Care & check-in',
+    desc: 'Comfort follow-up within 24 hours of any procedure to ensure zero residual pain or anxiety.',
+  },
+  {
+    num: '05',
+    title: 'Periodic review',
+    desc: 'Calm recall visits at 6 or 12 months to preserve bone and enamel vitality for a lifetime.',
+  },
+];
+
+export default function JourneyTimeline() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
+  const markerRef = useRef<SVGGElement>(null);
+
+  useEffect(() => {
+    const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isReduced || !containerRef.current || !pathRef.current) return;
+
+    const path = pathRef.current;
+    const pathLength = path.getTotalLength();
+    path.style.strokeDasharray = `${pathLength}`;
+    path.style.strokeDashoffset = `${pathLength}`;
+
+    // Link GSAP ScrollTrigger to travel the tooth marker along SVG track
+    const st = ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: 'top 75%',
+      end: 'bottom 60%',
+      scrub: 1,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        // Stroke dash reveal
+        path.style.strokeDashoffset = `${pathLength * (1 - progress)}`;
+
+        // Move marker
+        const point = path.getPointAtLength(progress * pathLength);
+        if (markerRef.current) {
+          markerRef.current.setAttribute('transform', `translate(${point.x}, ${point.y})`);
+        }
+      },
+    });
+
+    return () => {
+      st.kill();
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative py-12 max-w-5xl mx-auto px-4">
+      {/* SVG Connecting Track */}
+      <svg
+        className="hidden md:block absolute top-[5.5rem] left-[5%] w-[90%] h-12 pointer-events-none z-0"
+        viewBox="0 0 1000 40"
+        fill="none"
+      >
+        {/* Background track line */}
+        <path d="M 50 20 L 950 20" stroke="#d2e4e2" strokeWidth="2" strokeDasharray="6 6" />
+        {/* Animated progressive path */}
+        <path ref={pathRef} d="M 50 20 L 950 20" stroke="#1b6b6f" strokeWidth="3" />
+        {/* Traveling Tooth Marker */}
+        <g ref={markerRef} transform="translate(50, 20)">
+          <circle r="14" fill="#1b6b6f" />
+          <path
+            d="M -5 -4 C -5 -7, -2 -8, 0 -6 C 2 -8, 5 -7, 5 -4 C 5 0, 3 3, 2 6 C 1 7, -1 7, -2 6 C -3 3, -5 0, -5 -4 Z"
+            fill="#ffffff"
+          />
+        </g>
+      </svg>
+
+      {/* Step Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 relative z-10">
+        {steps.map((step) => (
+          <div
+            key={step.num}
+            className="group p-6 rounded-3xl bg-white border border-sanctuary-border/80 shadow-soft hover:shadow-float hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+          >
+            <div>
+              <div className="w-10 h-10 rounded-full bg-sanctuary-teal-surface text-sanctuary-teal font-serif font-bold flex items-center justify-center mb-4 group-hover:bg-sanctuary-teal group-hover:text-white transition-colors duration-300">
+                {step.num}
+              </div>
+              <h4 className="font-serif text-lg font-semibold text-sanctuary-charcoal mb-2">{step.title}</h4>
+              <p className="text-xs text-sanctuary-muted leading-relaxed">{step.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## 9. 4-Step Supabase Booking Flow Component
+
+### `src/app/book/page.tsx`
+```tsx
+'use client';
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Calendar, Clock, CheckCircle2, Phone, AlertCircle, ChevronRight, User } from 'lucide-react';
+
+const services = [
+  { id: 'first_consult', title: 'Free First Consultation', desc: '3D digital scan, personalized roadmap, zero fee' },
+  { id: 'pain_relief', title: 'Emergency / Tooth Pain Relief', desc: 'Gentle same-day pain neutralization' },
+  { id: 'cleaning', title: 'Gentle Ultrasonic Cleaning', desc: 'Painless scaling and prophylactic polish' },
+  { id: 'implants', title: 'Dental Implant Consultation', desc: 'Lifelong titanium implant planning' },
+  { id: 'aligners', title: 'Clear Aligners (Invisalign)', desc: 'Discreet orthodontic scan & preview' },
+  { id: 'pediatric', title: 'Child’s Gentle Dental Visit', desc: 'Pressure-free introduction for little smiles' },
+];
+
+const timeSlots = [
+  '10:00 AM', '11:00 AM', '12:00 PM', '06:30 PM', '07:30 PM', '08:30 PM', '09:15 PM'
+];
+
+export default function BookAppointmentPage() {
+  const router = useRouter();
+  const [step, setStep] = useState<number>(1);
+  const [selectedService, setSelectedService] = useState(services[0].title);
+  const [selectedDate, setSelectedDate] = useState('2025-11-14');
+  const [selectedSlot, setSelectedSlot] = useState(timeSlots[1]);
+  const [formData, setFormData] = useState({
+    name: '',
+    mobile: '',
+    email: '',
+    notes: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleBookingSubmit = async () => {
+    if (!formData.name || !formData.mobile || !formData.email) {
+      setErrorMsg('Please enter your full name, phone number, and email.');
+      return;
+    }
+
+    setLoading(true);
+    setErrorMsg('');
+
+    try {
+      const res = await fetch('/api/appointments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          mobile: formData.mobile,
+          email: formData.email,
+          service: selectedService,
+          date: selectedDate,
+          timeSlot: selectedSlot,
+          notes: formData.notes,
+        }),
+      });
+
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Failed to reserve appointment');
+
+      // Navigate to confirmation screen with booking reference
+      router.push(`/book/confirmed?ref=${json.appointment.reference_code}&service=${encodeURIComponent(selectedService)}&date=${selectedDate}&time=${encodeURIComponent(selectedSlot)}`);
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Something went wrong. Please call reception at 022 25891949.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <main className="min-h-screen pt-28 pb-20 bg-sanctuary-porcelain">
+      <div className="max-w-3xl mx-auto px-4">
+        {/* Step Indicator */}
+        <div className="flex items-center justify-between mb-8 max-w-md mx-auto">
+          {[1, 2, 3, 4].map((s) => (
+            <div key={s} className="flex items-center gap-2">
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center font-serif text-sm transition-all duration-300 ${
+                  step === s
+                    ? 'bg-sanctuary-teal text-white shadow-soft scale-110'
+                    : step > s
+                    ? 'bg-sanctuary-teal-light text-white'
+                    : 'bg-sanctuary-sage text-sanctuary-muted'
+                }`}
+              >
+                {step > s ? '✓' : s}
+              </div>
+              {s < 4 && <div className={`w-12 h-0.5 ${step > s ? 'bg-sanctuary-teal' : 'bg-sanctuary-border'}`} />}
+            </div>
+          ))}
+        </div>
+
+        {/* Booking Card */}
+        <div className="bg-white rounded-4xl p-8 md:p-10 border border-sanctuary-border shadow-soft">
+          {/* Step 1: Select Service */}
+          {step === 1 && (
+            <div>
+              <span className="text-xs uppercase tracking-wider text-sanctuary-teal font-semibold">Step 1 of 4</span>
+              <h2 className="font-serif text-3xl font-semibold text-sanctuary-charcoal mt-1 mb-2">What brings you in?</h2>
+              <p className="text-sm text-sanctuary-muted mb-6">Select a care path to reserve unhurried clinic time.</p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {services.map((srv) => (
+                  <button
+                    key={srv.id}
+                    type="button"
+                    onClick={() => setSelectedService(srv.title)}
+                    className={`p-4 rounded-2xl text-left border transition-all duration-200 ${
+                      selectedService === srv.title
+                        ? 'border-sanctuary-teal bg-sanctuary-teal-surface/60 shadow-sm ring-1 ring-sanctuary-teal'
+                        : 'border-sanctuary-border hover:border-sanctuary-teal-light bg-white'
+                    }`}
+                  >
+                    <div className="font-serif font-semibold text-sanctuary-charcoal text-base mb-1">{srv.title}</div>
+                    <div className="text-xs text-sanctuary-muted leading-relaxed">{srv.desc}</div>
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-8 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setStep(2)}
+                  className="px-8 py-3.5 rounded-full bg-sanctuary-teal text-white font-medium hover:bg-sanctuary-teal-dark shadow-soft transition-all duration-200"
+                >
+                  Continue to Schedule →
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 2: Date & Slot Selection */}
+          {step === 2 && (
+            <div>
+              <span className="text-xs uppercase tracking-wider text-sanctuary-teal font-semibold">Step 2 of 4</span>
+              <h2 className="font-serif text-3xl font-semibold text-sanctuary-charcoal mt-1 mb-2">Choose day & time</h2>
+              <p className="text-sm text-sanctuary-muted mb-6">Every appointment enjoys a dedicated 45-minute buffer.</p>
+
+              <div className="mb-6">
+                <label className="block text-xs font-semibold text-sanctuary-charcoal mb-2">Preferred Consultation Date</label>
+                <input
+                  type="date"
+                  value={selectedDate}
+                  min={new Date().toISOString().split('T')[0]}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  className="w-full px-4 py-3 rounded-2xl border border-sanctuary-border focus:ring-2 focus:ring-sanctuary-teal focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-sanctuary-charcoal mb-2">Select Unhurried Window</label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                  {timeSlots.map((slot) => (
+                    <button
+                      key={slot}
+                      type="button"
+                      onClick={() => setSelectedSlot(slot)}
+                      className={`py-3 px-2 rounded-xl text-xs font-semibold border transition-all ${
+                        selectedSlot === slot
+                          ? 'border-sanctuary-teal bg-sanctuary-teal text-white shadow-soft'
+                          : 'border-sanctuary-border hover:border-sanctuary-teal bg-sanctuary-porcelain text-sanctuary-charcoal'
+                      }`}
+                    >
+                      {slot}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-8 flex justify-between">
+                <button
+                  type="button"
+                  onClick={() => setStep(1)}
+                  className="px-6 py-3 rounded-full text-sanctuary-muted hover:text-sanctuary-charcoal"
+                >
+                  ← Back
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStep(3)}
+                  className="px-8 py-3.5 rounded-full bg-sanctuary-teal text-white font-medium hover:bg-sanctuary-teal-dark shadow-soft transition-all duration-200"
+                >
+                  Patient Details →
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Patient Information */}
+          {step === 3 && (
+            <div>
+              <span className="text-xs uppercase tracking-wider text-sanctuary-teal font-semibold">Step 3 of 4</span>
+              <h2 className="font-serif text-3xl font-semibold text-sanctuary-charcoal mt-1 mb-2">Patient coordinates</h2>
+              <p className="text-sm text-sanctuary-muted mb-6">Our front desk confirms all requests personally without bots.</p>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-semibold text-sanctuary-charcoal mb-1">Full Name *</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Asmita Patil"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-4 py-3 rounded-2xl border border-sanctuary-border focus:ring-2 focus:ring-sanctuary-teal focus:outline-none text-sm"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-sanctuary-charcoal mb-1">Mobile Number (WhatsApp) *</label>
+                    <input
+                      type="tel"
+                      placeholder="+91 98765 43210"
+                      value={formData.mobile}
+                      onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                      className="w-full px-4 py-3 rounded-2xl border border-sanctuary-border focus:ring-2 focus:ring-sanctuary-teal focus:outline-none text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-sanctuary-charcoal mb-1">Email Address *</label>
+                    <input
+                      type="email"
+                      placeholder="your.email@example.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full px-4 py-3 rounded-2xl border border-sanctuary-border focus:ring-2 focus:ring-sanctuary-teal focus:outline-none text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-sanctuary-charcoal mb-1">Notes / Phobias / Sensory Requirements</label>
+                  <textarea
+                    rows={3}
+                    placeholder="Tell us if you fear sounds or needles, or if you prefer weighted blankets..."
+                    value={formData.notes}
+                    onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                    className="w-full px-4 py-3 rounded-2xl border border-sanctuary-border focus:ring-2 focus:ring-sanctuary-teal focus:outline-none text-sm"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-8 flex justify-between">
+                <button
+                  type="button"
+                  onClick={() => setStep(2)}
+                  className="px-6 py-3 rounded-full text-sanctuary-muted hover:text-sanctuary-charcoal"
+                >
+                  ← Back
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStep(4)}
+                  className="px-8 py-3.5 rounded-full bg-sanctuary-teal text-white font-medium hover:bg-sanctuary-teal-dark shadow-soft transition-all duration-200"
+                >
+                  Review & Confirm →
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 4: Review & Write to Supabase */}
+          {step === 4 && (
+            <div>
+              <span className="text-xs uppercase tracking-wider text-sanctuary-teal font-semibold">Step 4 of 4</span>
+              <h2 className="font-serif text-3xl font-semibold text-sanctuary-charcoal mt-1 mb-2">Review your reservation</h2>
+              <p className="text-sm text-sanctuary-muted mb-6">Zero commitment. Cancellation is effortless with a single message.</p>
+
+              {errorMsg && (
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
+                  <span>{errorMsg}</span>
+                </div>
+              )}
+
+              <div className="bg-sanctuary-porcelain rounded-3xl p-6 border border-sanctuary-border space-y-4 mb-8">
+                <div className="flex justify-between border-b border-sanctuary-border pb-3">
+                  <span className="text-xs text-sanctuary-muted">Service</span>
+                  <span className="text-sm font-semibold text-sanctuary-charcoal font-serif">{selectedService}</span>
+                </div>
+                <div className="flex justify-between border-b border-sanctuary-border pb-3">
+                  <span className="text-xs text-sanctuary-muted">Date & Time</span>
+                  <span className="text-sm font-semibold text-sanctuary-charcoal font-serif">{selectedDate} at {selectedSlot}</span>
+                </div>
+                <div className="flex justify-between border-b border-sanctuary-border pb-3">
+                  <span className="text-xs text-sanctuary-muted">Attending Clinician</span>
+                  <span className="text-sm font-semibold text-sanctuary-charcoal font-serif">Dr. Anand Gangal & Dr. Padma Kurup</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-xs text-sanctuary-muted">Patient</span>
+                  <span className="text-sm font-semibold text-sanctuary-charcoal">{formData.name} ({formData.mobile})</span>
+                </div>
+              </div>
+
+              <div className="mt-8 flex justify-between">
+                <button
+                  type="button"
+                  onClick={() => setStep(3)}
+                  disabled={loading}
+                  className="px-6 py-3 rounded-full text-sanctuary-muted hover:text-sanctuary-charcoal"
+                >
+                  ← Edit Details
+                </button>
+                <button
+                  type="button"
+                  onClick={handleBookingSubmit}
+                  disabled={loading}
+                  className="px-8 py-3.5 rounded-full bg-sanctuary-teal text-white font-medium hover:bg-sanctuary-teal-dark shadow-soft transition-all duration-200 flex items-center gap-2"
+                >
+                  {loading ? (
+                    <span className="flex items-center gap-2">
+                      <span className="w-4 h-4 border-2 border-white/60 border-t-white rounded-full animate-spin" />
+                      Reserving Slot...
+                    </span>
+                  ) : (
+                    'Confirm & Send Request'
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Emergency Assistance Footer Note */}
+        <div className="mt-6 text-center text-xs text-sanctuary-muted flex items-center justify-center gap-2">
+          <Phone className="w-3.5 h-3.5 text-sanctuary-teal" />
+          <span>Need immediate toothache relief or custom timing? Call our reception desk directly at <strong>022 25891949</strong></span>
+        </div>
+      </div>
+    </main>
+  );
+}
+```
+
+---
+
+## 10. Booking Confirmed Screen with Add to Calendar
+
+### `src/app/book/confirmed/page.tsx`
+```tsx
+'use client';
+
+import React from 'react';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import { Check, Calendar, MessageSquare, ArrowLeft, Copy, MapPin } from 'lucide-react';
+
+export default function BookingConfirmedPage() {
+  const searchParams = useSearchParams();
+  const refCode = searchParams.get('ref') || 'GDC-4F7K';
+  const service = searchParams.get('service') || 'Free First Consultation';
+  const date = searchParams.get('date') || 'Thursday, 14 Nov 2025';
+  const time = searchParams.get('time') || '10:45 AM';
+
+  const copyReference = () => {
+    navigator.clipboard.writeText(refCode);
+    alert(`Copied reference code: ${refCode}`);
+  };
+
+  const generateGoogleCalendarLink = () => {
+    const title = encodeURIComponent(`Dental Visit — Gangal Dental Clinic (${refCode})`);
+    const details = encodeURIComponent(`Service: ${service}\nAttending: Dr. Anand Gangal\nSanctuary: Happy Valley Shopping Complex, Manpada, Thane West.\nPhone: 022 25891949`);
+    const location = encodeURIComponent('Shop No. 26-29, Happy Valley Shopping Complex, Tikujiniwadi Road, Manpada, Thane West 400610');
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}`;
+  };
+
+  return (
+    <main className="min-h-screen pt-28 pb-20 bg-sanctuary-porcelain">
+      <div className="max-w-2xl mx-auto px-4 text-center">
+        {/* Animated Checkmark Medallion */}
+        <div className="w-20 h-20 mx-auto rounded-full bg-sanctuary-teal-surface border-2 border-sanctuary-teal/40 flex items-center justify-center mb-6 shadow-soft">
+          <Check className="w-10 h-10 text-sanctuary-teal stroke-[2.5]" />
+        </div>
+
+        <span className="text-xs uppercase tracking-wider text-sanctuary-teal font-semibold">Appointment Request Received · Step 4 of 4 Complete</span>
+        <h1 className="font-serif text-4xl font-semibold text-sanctuary-charcoal mt-2 mb-3">Your request is in.</h1>
+        <p className="text-sm text-sanctuary-muted max-w-md mx-auto mb-6">
+          We have reserved this unhurried time for you. Sit back, breathe easy, and relax.
+        </p>
+
+        {/* Reference Badge */}
+        <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white border border-sanctuary-border shadow-soft mb-8">
+          <span className="text-xs text-sanctuary-muted uppercase font-medium">Booking Reference</span>
+          <span className="font-mono font-bold text-sanctuary-teal text-base tracking-wider">{refCode}</span>
+          <button onClick={copyReference} title="Copy reference code" className="p-1 text-sanctuary-muted hover:text-sanctuary-teal">
+            <Copy className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Summary Card */}
+        <div className="bg-white rounded-4xl p-8 border border-sanctuary-border shadow-soft text-left mb-8 space-y-6">
+          <div className="flex items-center justify-between pb-4 border-b border-sanctuary-border">
+            <h3 className="font-serif text-xl font-semibold text-sanctuary-charcoal">Consultation Schedule</h3>
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+              ● Pending Confirmation Call
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="p-4 rounded-2xl bg-sanctuary-porcelain">
+              <span className="text-xs text-sanctuary-muted uppercase">Clinical Service</span>
+              <div className="font-serif font-semibold text-sanctuary-charcoal mt-1">{service}</div>
+              <p className="text-[11px] text-sanctuary-teal mt-0.5">Complimentary · Zero Hidden Costs</p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-sanctuary-porcelain">
+              <span className="text-xs text-sanctuary-muted uppercase">Attending Clinician</span>
+              <div className="font-serif font-semibold text-sanctuary-charcoal mt-1">Dr. Anand Gangal</div>
+              <p className="text-[11px] text-sanctuary-muted mt-0.5">22+ Years Gentle Care Mastery</p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-sanctuary-porcelain">
+              <span className="text-xs text-sanctuary-muted uppercase">Date & Reserved Time</span>
+              <div className="font-serif font-semibold text-sanctuary-charcoal mt-1">{date}</div>
+              <p className="text-[11px] text-sanctuary-muted mt-0.5">{time} (45-min unhurried session)</p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-sanctuary-porcelain">
+              <span className="text-xs text-sanctuary-muted uppercase">Sanctuary Coordinates</span>
+              <div className="font-serif font-semibold text-sanctuary-charcoal mt-1">Shop No. 26–29, Happy Valley</div>
+              <p className="text-[11px] text-sanctuary-muted mt-0.5">Tikujiniwadi Rd, Manpada, Thane West</p>
+            </div>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-sanctuary-teal-container/40 border border-sanctuary-teal/20 text-xs text-sanctuary-teal-dark leading-relaxed">
+            <strong>Prompt Care Team Verification:</strong> Our front-desk coordinator will call your phone to verify health history questions during operational hours (10:00 AM – 1:00 PM & 6:00 PM – 10:00 PM).
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <a
+            href={generateGoogleCalendarLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-6 py-3.5 rounded-full bg-sanctuary-teal text-white text-sm font-medium hover:bg-sanctuary-teal-dark shadow-soft transition-all"
+          >
+            <Calendar className="w-4 h-4" />
+            Add to Calendar
+          </a>
+
+          <a
+            href="https://wa.me/919987076628?text=Hello%20Gangal%20Dental%20Clinic,%20I%20have%20booked%20an%20appointment%20with%20reference%20code:%20"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-6 py-3.5 rounded-full bg-white border border-sanctuary-border text-sanctuary-charcoal text-sm font-medium hover:border-sanctuary-teal shadow-soft transition-all"
+          >
+            <MessageSquare className="w-4 h-4 text-emerald-600" />
+            WhatsApp Us
+          </a>
+
+          <Link
+            href="/"
+            className="flex items-center gap-2 px-6 py-3.5 rounded-full text-sanctuary-muted text-sm hover:text-sanctuary-charcoal transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Home
+          </Link>
+        </div>
+      </div>
+    </main>
+  );
+}
+```
+
+---
+
+## 11. Environment Configuration (`.env.local`)
+
+```env
+# Next.js Public Supabase Credentials
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOi...
+
+# Clinic Telephony & Notifications
+NEXT_PUBLIC_CLINIC_PHONE=02225891949
+NEXT_PUBLIC_CLINIC_WHATSAPP=+919987076628
+NEXT_PUBLIC_CLINIC_EMAIL=dranandgangal@gmail.com
+```
+
+---
+
+## 12. Deployment Checklist
+
+1. Run `npx supabase db push` to apply the appointments table and RLS policies.
+2. Ensure environment variables are populated in Vercel or your hosting environment.
+3. Test smooth scroll with Lenis on high-refresh displays (120Hz) and verify zero stuttering with GSAP ScrollTrigger.
+4. Verify Three.js fallbacks when `prefers-reduced-motion: reduce` is toggled in device settings.
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_20 -->
+</body>
+</html>
