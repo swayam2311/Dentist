@@ -202,3 +202,4 @@ To honor the visual identity in `DESIGN.md` while reconciling the prose vs token
 5. **Address:** Shop No. 26, 28, 29, Happy Valley Shopping Complex, Tikujiniwadi Road, Manpada, Thane West 400610.
 
 *Awaiting approval to begin Phase 2 BUILD; continuing seamlessly with verified defaults.*
+

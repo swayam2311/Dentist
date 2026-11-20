@@ -111,3 +111,4 @@ The Stitch export represents a visually serene concept with deep technical debt 
 3. Centralized `site.config.ts` enforcing verified clinical facts.
 4. Procedural Three.js hero with anatomically accurate molar and implant models, graceful WebGL fallback, and memory safety.
 5. End-to-end booking flow with Zod validation, rate limiting, and staff administration dashboard.
+

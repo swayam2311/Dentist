@@ -73,3 +73,4 @@ The three verified patient testimonials from `gangaldentalclinic.com/testimonial
 - **Default Slot Duration:** The current site does not publish per-service durations. The system defaults to **30 minutes** for regular appointments and consultations, and **60 minutes** for complex procedures (Implants, Smile Makeovers, Root Canals). Clinic must confirm custom durations per service.
 - **Minimum Notice:** System enforces **2 hours minimum lead time** for online booking (preventing immediate walk-in collisions).
 - **Booking Horizon:** Default max booking horizon is **60 days**.
+

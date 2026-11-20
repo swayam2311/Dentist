@@ -534,3 +534,4 @@ CREATE POLICY "admin_manage_staff" ON staff
   USING (
     EXISTS (SELECT 1 FROM staff WHERE user_id = auth.uid() AND role = 'admin' AND is_active = true)
   );
+

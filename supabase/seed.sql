@@ -293,3 +293,4 @@ FROM generate_series(1, 5) AS d;
 -- Saturday (10:00 - 17:00)
 INSERT INTO availability_rules (dentist_id, weekday, start_time, end_time, slot_minutes)
 VALUES ('d2222222-2222-2222-2222-222222222222', 6, '10:00'::TIME, '17:00'::TIME, 30);
+
