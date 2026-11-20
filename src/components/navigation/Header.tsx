@@ -2,14 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { siteConfig } from '@/config/site.config';
 import { ThemeToggle } from './ThemeToggle';
+import { ClinicLogo } from '@/components/ui/ClinicLogo';
 import { Menu, X, Phone, Calendar } from 'lucide-react';
-
-const STITCH_LOGO_URL =
-  'https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA';
 
 export function Header() {
   const pathname = usePathname();
@@ -40,16 +37,7 @@ export function Header() {
           href="/"
           className="flex items-center gap-space-sm hover:opacity-90 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full pr-2"
         >
-          <div className="relative h-8 w-8 shrink-0">
-            <Image
-              src={STITCH_LOGO_URL}
-              alt="Gangal Dental Clinic Monogram"
-              width={32}
-              height={32}
-              className="h-8 w-auto object-contain"
-              priority
-            />
-          </div>
+          <ClinicLogo className="h-8 w-8 shrink-0 rounded-xl shadow-sm" />
           <span className="font-headline-sm text-headline-sm text-primary tracking-tight">
             {siteConfig.name}
           </span>

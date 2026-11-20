@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -30,16 +31,6 @@ const nextConfig = {
       {
         source: '/team-member/:path*',
         destination: '/our-team',
-        permanent: true,
-      },
-      {
-        source: '/new-patients',
-        destination: '/new-patients',
-        permanent: true,
-      },
-      {
-        source: '/treatments',
-        destination: '/treatments',
         permanent: true,
       },
       {

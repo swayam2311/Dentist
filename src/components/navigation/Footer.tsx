@@ -2,11 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { siteConfig } from '@/config/site.config';
-
-const STITCH_LOGO_URL =
-  'https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA';
+import { ClinicLogo } from '@/components/ui/ClinicLogo';
 
 export function Footer() {
   return (
@@ -16,13 +13,7 @@ export function Footer() {
           {/* Clinic Brand & Address */}
           <div className="md:col-span-5 flex flex-col gap-space-xs">
             <div className="flex items-center gap-space-xs mb-space-xs">
-              <Image
-                src={STITCH_LOGO_URL}
-                alt="Gangal Dental Clinic Monogram"
-                width={32}
-                height={32}
-                className="h-8 w-auto object-contain"
-              />
+              <ClinicLogo className="h-8 w-8 shrink-0 rounded-xl" />
               <span className="font-headline-md text-headline-md text-primary">
                 {siteConfig.name}
               </span>
