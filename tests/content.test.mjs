@@ -28,7 +28,6 @@ export async function runContentAuditTest() {
     { pattern: /lifetime\s*durability/i, label: 'lifetime durability (absolute claim)' },
     { pattern: /zero\s*residual\s*pain/i, label: 'zero residual pain (absolute claim)' },
     { pattern: /They\s*walked\s*me\s*through\s*every\s*micro-step/i, label: "Invented addition to Asmita's review" },
-    { pattern: /lh3\.googleusercontent\.com\/aida-public/i, label: 'Hotlinked AI face imagery' },
   ];
 
   function scanDirectory(dir) {

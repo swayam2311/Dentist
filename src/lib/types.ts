@@ -4,8 +4,8 @@ import { z } from 'zod';
 export const indianMobileRegex = /^\+91[6-9]\d{9}$/;
 
 export const BookingRequestSchema = z.object({
-  serviceId: z.string().uuid({ message: 'Please select a valid treatment service.' }),
-  dentistId: z.string().uuid().nullable().optional(),
+  serviceId: z.string().min(1, { message: 'Please select a valid treatment service.' }),
+  dentistId: z.string().min(1).nullable().optional(),
   startsAt: z.string().datetime({ message: 'Invalid slot timestamp format.' }),
   patientName: z
     .string()

@@ -1,26 +1,10 @@
 import type { Metadata, Viewport } from 'next';
-import { Newsreader, Manrope } from 'next/font/google';
 import '@/styles/globals.css';
 import { siteConfig } from '@/config/site.config';
 import { Header } from '@/components/navigation/Header';
 import { Footer } from '@/components/navigation/Footer';
 import { MobileStickyBar } from '@/components/navigation/MobileStickyBar';
 import { SmoothScrollProvider } from '@/components/motion/SmoothScrollProvider';
-
-const newsreader = Newsreader({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-newsreader',
-  style: ['normal', 'italic'],
-  weight: ['400', '500', '600'],
-});
-
-const manrope = Manrope({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-manrope',
-  weight: ['400', '500', '600', '700'],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -60,7 +44,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#1B6B6F',
+  themeColor: '#005255',
 };
 
 export default function RootLayout({
@@ -68,7 +52,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Schema.org Dentist / LocalBusiness Structured Data
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': ['Dentist', 'MedicalBusiness', 'LocalBusiness'],
@@ -116,17 +99,27 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${newsreader.variable} ${manrope.variable}`}>
+    <html lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          rel="stylesheet"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body data-theme="warm" className="min-h-screen flex flex-col font-sans bg-theme-surface text-theme-ink">
+      <body data-theme="aqua" className="min-h-screen flex flex-col font-sans bg-surface text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-fixed">
         <SmoothScrollProvider>
           <Header />
-          <main className="flex-1 pt-24">{children}</main>
+          <main className="flex-1 pt-20">{children}</main>
           <Footer />
           <MobileStickyBar />
         </SmoothScrollProvider>
@@ -134,4 +127,3 @@ export default function RootLayout({
     </html>
   );
 }
-

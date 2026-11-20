@@ -2,6 +2,8 @@ import { runLinksTest } from '../tests/links.test.mjs';
 import { runContentAuditTest } from '../tests/content.test.mjs';
 import { runRlsSecurityTest } from '../tests/rls.test.mjs';
 import { runBookingValidationTest } from '../tests/booking.test.mjs';
+import { runWhiteBoxTests } from '../tests/whitebox.test.mjs';
+import { runBlackBoxTests } from '../tests/blackbox.test.mjs';
 
 async function main() {
   console.log('===============================================================');
@@ -50,9 +52,23 @@ async function main() {
     }
   }
 
+  // 5. White-Box Unit & System Logic Test
+  const whiteboxResult = await runWhiteBoxTests();
+  console.log(`[TEST 5] ${whiteboxResult.testName}: ${whiteboxResult.passed ? 'PASSED ✅' : 'FAILED ❌'}`);
+  if (!whiteboxResult.passed) {
+    totalFailed++;
+  }
+
+  // 6. Black-Box Functional & Quality Metrics Test
+  const blackboxResult = await runBlackBoxTests();
+  console.log(`[TEST 6] ${blackboxResult.testName}: ${blackboxResult.passed ? 'PASSED ✅' : 'FAILED ❌'}`);
+  if (!blackboxResult.passed) {
+    totalFailed++;
+  }
+
   console.log('\n---------------------------------------------------------------');
   if (totalFailed === 0) {
-    console.log('ALL VERIFICATION & ACCEPTANCE TESTS PASSED (4/4) ✅');
+    console.log('ALL VERIFICATION & ACCEPTANCE TESTS PASSED (6/6) ✅');
     process.exit(0);
   } else {
     console.error(`FAILED: ${totalFailed} test suite(s) had errors. ❌`);
@@ -64,4 +80,3 @@ main().catch((err) => {
   console.error('Test runner fatal error:', err);
   process.exit(1);
 });
-

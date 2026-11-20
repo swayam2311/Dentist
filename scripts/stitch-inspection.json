@@ -1,0 +1,286 @@
+{
+  "booking_confirmed_gangal_dental_clinic": {
+    "imageCount": 3,
+    "images": [
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuC8pfOUpW-NXtmc44ucf3eQshWrh7D2icKik3baiaUsl2PYEiJzv8ZLRhfosrSHwrUIfiUadfNY6sgQx3dn7KJ1vIV75fsJdmCKaIa2b2WoebqfK87YNVWxg_X400xE0VyC_YM8mC8g-XzmJxICOnrr-Vt2Kpw6J2vU4EeOFvATqea5GITdCTo7nYEeuHG7HGKQI-8-GZlgA9sTy_QSC1AEpbFen5N9ty7suLZWR9Hw",
+        "alt": "Warm and reassuring portrait of Dr Anand Gangal, senior dentist and prosthodontist, wearing a soft teal medical scrub with warm studio lighting and neutral clinic background",
+        "dataAlt": "Warm and reassuring portrait of Dr Anand Gangal, senior dentist and prosthodontist, wearing a soft teal medical scrub with warm studio lighting and neutral clinic background",
+        "className": "w-full h-full object-cover"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      }
+    ],
+    "stylesLength": 417,
+    "fonts": [
+      "fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    ]
+  },
+  "book_appointment_gangal_dental_clinic": {
+    "imageCount": 4,
+    "images": [
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuC_r_PSSa9PJDCeO8gpVjMUfRlJehCKE7l4SFEurQkq0EsOGDb48xKpCAxoK44FAN626-K2_Oxhy9MB37kHUBT4kt9Si4YJq2Y1sZE4902Kfy6BUBOwSLiXH6yFe7J2kBG5Bv0sjLgiCypgGDEBcDlhOB7h7L7qqjAWFNWZwrpo4gszHcUbF7AfZ4mxbycAQqojdT1dUOJUttAZqxi87oh3oogbgUrHNIYuh4Soy-Ha",
+        "alt": "A warm, distinguished middle-aged Indian male dentist with kind compassionate eyes, wearing spotless surgical scrubs inside a serene architectural clinic, gentle natural daylight.",
+        "dataAlt": "A warm, distinguished middle-aged Indian male dentist with kind compassionate eyes, wearing spotless surgical scrubs inside a serene architectural clinic, gentle natural daylight.",
+        "className": "w-full h-full object-cover"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuD4zv7U8kS8crq8WeyMLRokdrxFAV5fJomw6ztoztgKDTKTItfJq9_x4bY3RNE_LYRYReOs7sZlNQwAXFKyBK1BE8i7CdRKCTEmJt3FfJSsOUE1g22qb4Z6md7TvLs_jXQvG9PSBNe0XQEf254rnu3mYeSjmHdace1GvsK8r4AB_hsSPlpGCiob2csoew5fJA3JimaK-08TG1VRAZvdxbyfTkGxQIYAKUhNXAJ8ileM",
+        "alt": "A serene, reassuring Indian female pediatric dentist with warm calming posture, wearing minimal surgical attire in a modern boutique dental clinic bathed in soft morning light.",
+        "dataAlt": "A serene, reassuring Indian female pediatric dentist with warm calming posture, wearing minimal surgical attire in a modern boutique dental clinic bathed in soft morning light.",
+        "className": "w-full h-full object-cover"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      }
+    ],
+    "stylesLength": 230,
+    "fonts": [
+      "fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    ]
+  },
+  "contact_gangal_dental_clinic": {
+    "imageCount": 2,
+    "images": [
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      }
+    ],
+    "stylesLength": 230,
+    "fonts": [
+      "fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    ]
+  },
+  "gangal_dental_clinic_gentle_family_dentistry": {
+    "imageCount": 3,
+    "images": [
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuAF0AqFQ-g5kEaHBHUYI6aSRGdgxugbeu7KLHBl6WUklq_semXmYtMup5iyWS3zQhg3msuY6BPZQ8hY2vXiwk6nKL5dkdIaOS_zu-lfQ48cr6AfneLxb7FV2xN0Ig8cfrROqdI-rkeulg1VrjqJlJ1Rv1h95c9k1lxrn98jinBhOlE6CvK_WGR9aabNiEglf1udxMazJQb8fWQ4L1p23uI8O9JMqpdp1qtrtBo28Bjg",
+        "alt": "Hyper-realistic dental cross-section model showing a pristine ceramic porcelain crown mounted onto a high-precision titanium implant root integrated into cellular bone structure, illuminated by soft warm studio daylight in serene clinical aesthetic.",
+        "dataAlt": "Hyper-realistic dental cross-section model showing a pristine ceramic porcelain crown mounted onto a high-precision titanium implant root integrated into cellular bone structure, illuminated by soft warm studio daylight in serene clinical aesthetic.",
+        "className": "w-full h-full object-cover transform hover:scale-[1.02] transition-transform duration-700 ease-out"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      }
+    ],
+    "stylesLength": 230,
+    "fonts": [
+      "fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    ]
+  },
+  "gangal_dental_clinic_gentle_family_dentistry_animated": {
+    "imageCount": 3,
+    "images": [
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuAF0AqFQ-g5kEaHBHUYI6aSRGdgxugbeu7KLHBl6WUklq_semXmYtMup5iyWS3zQhg3msuY6BPZQ8hY2vXiwk6nKL5dkdIaOS_zu-lfQ48cr6AfneLxb7FV2xN0Ig8cfrROqdI-rkeulg1VrjqJlJ1Rv1h95c9k1lxrn98jinBhOlE6CvK_WGR9aabNiEglf1udxMazJQb8fWQ4L1p23uI8O9JMqpdp1qtrtBo28Bjg",
+        "alt": "Hyper-realistic dental cross-section model showing a pristine ceramic porcelain crown mounted onto a high-precision titanium implant root integrated into cellular bone structure, illuminated by soft warm studio daylight in serene clinical aesthetic.",
+        "dataAlt": "Hyper-realistic dental cross-section model showing a pristine ceramic porcelain crown mounted onto a high-precision titanium implant root integrated into cellular bone structure, illuminated by soft warm studio daylight in serene clinical aesthetic.",
+        "className": "w-full h-full object-cover transform hover:scale-[1.03] transition-transform duration-700 ease-out"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      }
+    ],
+    "stylesLength": 5125,
+    "fonts": [
+      "fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    ]
+  },
+  "gangal_dental_clinic_mobile_homepage": {
+    "imageCount": 0,
+    "images": [],
+    "stylesLength": 575,
+    "fonts": [
+      "fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    ]
+  },
+  "new_patients_gangal_dental_clinic": {
+    "imageCount": 3,
+    "images": [
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuDAasvDR0YC7u4jetxP-TlVQExMmsvSbb_bUd57JTzs1Ur6bYxNLzCnQPa0fr_J03WYFf0OjEkBwFyxXFsnqS7TaJZuVBISfvWWCZyEnw655XaBN9FkvsfsEHo7hGMa-9xamKVaouK0eZSf4Runo_0ESsH2qiRogzy1HRT4gG15fSu4o4IN0-voKADpqheow2GwqdphxvV3QmTltXeNhnjF7E0hnqvrF6YJ1-80MFPF",
+        "alt": "Sunlit minimalist dental clinic consultation suite with light oak accents, soft beige linen chairs, a discreet digital scanner on a brass trolley, warm natural indirect lighting, zero intimidating surgical clutter, peaceful modern spa atmosphere in Thane India.",
+        "dataAlt": "Sunlit minimalist dental clinic consultation suite with light oak accents, soft beige linen chairs, a discreet digital scanner on a brass trolley, warm natural indirect lighting, zero intimidating surgical clutter, peaceful modern spa atmosphere in Thane India.",
+        "className": "w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      }
+    ],
+    "stylesLength": 230,
+    "fonts": [
+      "fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    ]
+  },
+  "our_team_gangal_dental_clinic": {
+    "imageCount": 10,
+    "images": [
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuDNRuydQoxUBjVMwun7L70VV4JHXydMcTG-QZu3oU2b_6UW5NB-r_z8hOCs0dxOuxzE0p5UF4_lO_2sbS7dk7-C6HzUIfpCUF2aQOFgACntcvZUaeOvOJlmnG71XWQKwEC6r75m6TdocYdK-Y8CqXqiAuAghHbuLQgqmMdPAwFfdpcZxwjvVEDqF-j80s52UUtMleMbMIzqzz_7vX5PbH-ngrNrD6aDE1FybvX8AYJO",
+        "alt": "Distinguished Indian male principal dentist in his late 40s wearing a modern sage green linen clinical tunic with soft daylight smiling serenely in a sun-drenched warm minimalist dental clinic with natural wood and subtle brass accents, serene and welcoming.",
+        "dataAlt": "Distinguished Indian male principal dentist in his late 40s wearing a modern sage green linen clinical tunic with soft daylight smiling serenely in a sun-drenched warm minimalist dental clinic with natural wood and subtle brass accents, serene and welcoming.",
+        "className": "w-full h-full object-cover object-top"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuCi0SqTLk0NyJOA0x5BBWvM6tfePbHkduKzl7viWDZw-k_Paz4PGeG7OTVxdIIEZgFZKqhJnDMhaC2IrfGh-NyrTDAdx4pQ1giOAlZox06XSl_Rm9LNIYOr9M77HoficvhFFFFjWRqgg_ZbVvgARkNUs-Bz54fy_WhR6JI9uWe3DXxHBAhc-8h9aViCBf53IZeGYOTXT9xH_QfvSJbtaxwwSCZQCk33wavpOaZ0k-uG",
+        "alt": "Graceful Indian female dentist in her late 30s wearing warm cream clinical attire with gold rimmed spectacles, smiling reassuringly, sitting in a serene treatment room with soft indoor plants, textured warm beige lime wash walls, peaceful diffused natural morning lighting.",
+        "dataAlt": "Graceful Indian female dentist in her late 30s wearing warm cream clinical attire with gold rimmed spectacles, smiling reassuringly, sitting in a serene treatment room with soft indoor plants, textured warm beige lime wash walls, peaceful diffused natural morning lighting.",
+        "className": "w-full h-full object-cover object-top"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuC7nBDpm6Eav0fchIVZS1lmuRhAnxnShJUeH_ePVKaEUb-9UTAkD9mBLswpRWIGp0XgqC3veulBJq5u1cOa8ItKrTf7x0ORsb6Gsn_Jhi2GHCnGG05TRJUqfAfJ1V1WliNQ9rwJj2PC8mRChW611e4n2yAgbJ-1fDQQcLUvb8ej_OtMt9lx1AruspVqpuCpQvm8Zyj8coVNcH8viT4wJmUttJ0VsV2ix86FZgWiPkq6",
+        "alt": "Warm and welcoming young Indian female receptionist with hair neatly tied in a low chignon, smiling kindly across a clean, minimalist wood and terrazzo clinic reception desk with soft morning ambient light.",
+        "dataAlt": "Warm and welcoming young Indian female receptionist with hair neatly tied in a low chignon, smiling kindly across a clean, minimalist wood and terrazzo clinic reception desk with soft morning ambient light.",
+        "className": "w-full h-full object-cover object-center"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuANehY7uV3LH_JAxF7uZjuDHGjkbq7sD489vCZI-C_E6pJ53xeUOiPRKUq7pRqFu3obEdBG8WFDGZlMrjfEr0PNFvSvwhfMHhBGkGm5eBUWs9rNfzWJ-A9pOfMb1VF4xioexF-2Q5nnsyj_25-wN1_spj476lI_6dXWKgs7YA5ddCMteQdM184nMaxtt_1HNGrvtdFEH4IR_RO8aWKH_uMDi4MDWd6XSLjUSOx9xtef",
+        "alt": "Professional Indian female dental assistant in tailored mint green clinical scrubs standing in an impeccably organized dental operatory with gentle warm illumination and high-end dental equipment.",
+        "dataAlt": "Professional Indian female dental assistant in tailored mint green clinical scrubs standing in an impeccably organized dental operatory with gentle warm illumination and high-end dental equipment.",
+        "className": "w-full h-full object-cover object-center"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuCQ3KSR9jszhZfqBbbQQ5tFSjZ8CTgOBRsQB1jNo65nMXsuvxfta_0dNXblGfvCyIQVUtThRbm8WgM7hO9CSv-OIE7XChjveGyOeDqQUP4Z08Hb6wd7m5e9medi7BE-eLzOV0uz1vnWfw8QEXgZZcpoQWElKeGugRIzWzWIizfdrS_WQLMD9a3Kd3gKui5ZcX6G2230756gzQmEQZe6LyLDG2ThUzQpqV3kPdynKl_M",
+        "alt": "Kind Indian female dental nurse in soft green uniform holding a warm fleece comfort blanket in a tranquil restorative dental suite with soft indirect warm lighting.",
+        "dataAlt": "Kind Indian female dental nurse in soft green uniform holding a warm fleece comfort blanket in a tranquil restorative dental suite with soft indirect warm lighting.",
+        "className": "w-full h-full object-cover object-center"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuCJwsIr9cICbrRyjeBTgy71PDTiFZZkmsK0FBcd7JFMeH7VxBuf9Q8AnfSuSUp0hNBnh2UFOOF_UA5IUChYedJEAkS3vsIpwqy-vRRQ8acafqkuY6GiII23KWP1kg7FGvlbx4G76WZA2JZUDJ4LQ6oJOlMKikpytmql8UOylJGRhF_j-o2ae0lDFWu7u3n8iIvaCeI4LdPIWXb7XGGGqGcpwfFy0CE_dZqibuU505x8",
+        "alt": "Indian male clinical equipment specialist in hygienic dental scrubs and hair cap carefully inspecting precision micro-instruments under bright magnifying glass in a spotless modern clinic laboratory.",
+        "dataAlt": "Indian male clinical equipment specialist in hygienic dental scrubs and hair cap carefully inspecting precision micro-instruments under bright magnifying glass in a spotless modern clinic laboratory.",
+        "className": "w-full h-full object-cover object-center"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuB9Q0H0iYRi7vtJFTcMu0COAHVIEEpdHFZ0E-UmR8exdyC1itANRdQlqi5I64T_2Klv-pR2wKUa3gnXsu7gmd1f8t8iFHxqura1mR0iWsezfmogbzQvFadOEA9AIbEASgZVYYxPukHGaQTDhKPIURo589niKUtv4MQ3gZmjzYZJxhsfrmoAQY2cnvsi-uZsYet3zpu08E_fK-gA7Ov48hKV5bY4RevSsoVPhSPQroxG",
+        "alt": "Gentle young Indian woman dental assistant smiling warmly while holding a soft pediatric dental mascot puppet in a warm, welcoming children treatment bay with soft pastel accents and serene sunlight.",
+        "dataAlt": "Gentle young Indian woman dental assistant smiling warmly while holding a soft pediatric dental mascot puppet in a warm, welcoming children treatment bay with soft pastel accents and serene sunlight.",
+        "className": "w-full h-full object-cover object-center"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuCCFNtXaeLN-ywLdHe0bFkp2r3i8OE0xsLP0uKVNvy9prwgY4x3TuzkLyhv_amnwcfvej5bRfUDicYo7rwWTso9v1cJS9JIxamQ9POoYelmS7A24F-yMMuQ9Y2Z7ZBR4Rf2RNroKKExIyvcQ3mB0qigmTR6FM8TtaFAGdTSsW1-4BUyed3wvqV5f_Xu2StPwUkRePRah6eNypU3inFxGdEtR6_OG2vwcxDCuBdPQC4w",
+        "alt": "Meticulous Indian woman sterilization expert wearing surgical gown and gloves sealing sterilization autoclave pouches in a gleaming state-of-the-art dental decontamination room.",
+        "dataAlt": "Meticulous Indian woman sterilization expert wearing surgical gown and gloves sealing sterilization autoclave pouches in a gleaming state-of-the-art dental decontamination room.",
+        "className": "w-full h-full object-cover object-center"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      }
+    ],
+    "stylesLength": 230,
+    "fonts": [
+      "fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    ]
+  },
+  "three.js": {
+    "imageCount": 0,
+    "images": [],
+    "stylesLength": 170,
+    "fonts": []
+  },
+  "treatments_gangal_dental_clinic": {
+    "imageCount": 2,
+    "images": [
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      },
+      {
+        "src": "https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA",
+        "alt": "Gangal Dental Clinic Monogram",
+        "dataAlt": "",
+        "className": "h-8 w-auto object-contain"
+      }
+    ],
+    "stylesLength": 230,
+    "fonts": [
+      "fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200",
+      "fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    ]
+  }
+}

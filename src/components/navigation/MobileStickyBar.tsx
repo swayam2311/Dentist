@@ -3,65 +3,54 @@
 import React from 'react';
 import Link from 'next/link';
 import { siteConfig } from '@/config/site.config';
-import { Phone, MessageCircle, Navigation, Calendar } from 'lucide-react';
 
 export function MobileStickyBar() {
   return (
-    <div
-      className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-theme-card/94 backdrop-blur-xl border-t border-theme-border/60 px-3 py-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(15,46,51,0.08)]"
-      role="region"
-      aria-label="Quick Actions"
+    <nav
+      className="md:hidden fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-t border-surface-container-high"
+      aria-label="Mobile Quick Actions"
     >
-      <div className="grid grid-cols-4 gap-2 max-w-md mx-auto">
-        {/* 1. Call */}
+      <div className="flex justify-between items-center h-20 px-space-md max-w-md mx-auto">
+        {/* Call Clinic */}
         <a
           href={siteConfig.contact.landlineTel}
-          className="flex flex-col items-center justify-center gap-1 py-1 px-1 rounded-2xl text-primary hover:bg-theme-container/50 transition-colors focus:outline-none"
+          className="flex flex-col items-center justify-center min-w-[56px] min-h-[48px] px-space-xs py-1 rounded-full text-on-surface-variant hover:text-on-surface active:scale-95 transition-all"
         >
-          <div className="w-8 h-8 rounded-full bg-theme-container/60 flex items-center justify-center">
-            <Phone className="w-4 h-4" />
-          </div>
-          <span className="font-sans text-[11px] font-medium leading-none">Call</span>
+          <span className="material-symbols-outlined text-[22px]">call</span>
+          <span className="font-label-caption text-label-caption mt-0.5">Call</span>
         </a>
 
-        {/* 2. WhatsApp */}
+        {/* WhatsApp */}
         <a
           href={siteConfig.contact.whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center gap-1 py-1 px-1 rounded-2xl text-primary hover:bg-theme-container/50 transition-colors focus:outline-none"
+          className="flex flex-col items-center justify-center min-w-[56px] min-h-[48px] px-space-xs py-1 rounded-full text-on-surface-variant hover:text-on-surface active:scale-95 transition-all"
         >
-          <div className="w-8 h-8 rounded-full bg-theme-secondary-container/80 text-theme-ink flex items-center justify-center">
-            <MessageCircle className="w-4 h-4" />
-          </div>
-          <span className="font-sans text-[11px] font-medium leading-none">WhatsApp</span>
+          <span className="material-symbols-outlined text-[22px]">chat</span>
+          <span className="font-label-caption text-label-caption mt-0.5">WhatsApp</span>
         </a>
 
-        {/* 3. Directions */}
+        {/* Directions */}
         <a
           href={siteConfig.address.googleMapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center gap-1 py-1 px-1 rounded-2xl text-primary hover:bg-theme-container/50 transition-colors focus:outline-none"
+          className="flex flex-col items-center justify-center min-w-[56px] min-h-[48px] px-space-xs py-1 rounded-full text-on-surface-variant hover:text-on-surface active:scale-95 transition-all"
         >
-          <div className="w-8 h-8 rounded-full bg-theme-container/60 flex items-center justify-center">
-            <Navigation className="w-4 h-4" />
-          </div>
-          <span className="font-sans text-[11px] font-medium leading-none">Directions</span>
+          <span className="material-symbols-outlined text-[22px]">near_me</span>
+          <span className="font-label-caption text-label-caption mt-0.5">Directions</span>
         </a>
 
-        {/* 4. Book Visit */}
+        {/* Book */}
         <Link
           href="/book"
-          className="flex flex-col items-center justify-center gap-1 py-1 px-1 rounded-2xl bg-primary text-white shadow-button hover:bg-theme-primary-container transition-colors focus:outline-none"
+          className="flex items-center justify-center gap-space-xs min-h-[48px] px-space-md py-space-xs bg-primary text-on-primary rounded-full font-label-button text-label-button shadow-md active:scale-95 transition-all"
         >
-          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white">
-            <Calendar className="w-4 h-4" />
-          </div>
-          <span className="font-sans text-[11px] font-semibold leading-none">Book</span>
+          <span className="material-symbols-outlined text-[20px]">event_available</span>
+          <span>Book</span>
         </Link>
       </div>
-    </div>
+    </nav>
   );
 }
-

@@ -2,10 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { siteConfig } from '@/config/site.config';
 import { ThemeToggle } from './ThemeToggle';
 import { Menu, X, Phone, Calendar } from 'lucide-react';
+
+const STITCH_LOGO_URL =
+  'https://lh3.googleusercontent.com/aida/ALJJyrAn7BVzeMG76sctnSczphCBSPf82zf_Lp0-DjgbPExhZMOzMuccNGbUtiXfzETvRJfPKUnXc4A_tZxBm2ZT3SHkTrHww566oNRrnb2olKFcOez_JyB8gn3uXVw-SNQcwjYqn-5QnKjdi_VJ7yjFQVw44zK8P1vtQvQT0nWHbjkld-CSx5AT61iBq5Gkx7CGVklwhJw9M3ZaKRVKy7qLRU_hoQwyC-xQBxb5DZPwG6onVA';
 
 export function Header() {
   const pathname = usePathname();
@@ -20,91 +24,86 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navItems = [
+    { label: 'Treatments', href: '/treatments' },
+    { label: 'Our Team', href: '/our-team' },
+    { label: 'New Patients', href: '/new-patients' },
+    { label: 'Patient Stories', href: '/#patient-stories' },
+    { label: 'Contact', href: '/contact' },
+  ];
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 py-3 px-4 sm:px-6 lg:px-8 transition-all duration-300">
-      <div
-        className={`max-w-[1200px] mx-auto h-20 rounded-full px-5 sm:px-8 flex items-center justify-between transition-all duration-300 border border-theme-border/60 ${
-          scrolled
-            ? 'bg-theme-card/90 backdrop-blur-xl shadow-ambient'
-            : 'bg-theme-card/75 backdrop-blur-md shadow-sm'
-        }`}
-      >
+    <header className="fixed top-0 left-0 right-0 z-50 py-space-sm px-margin-mobile lg:px-margin transition-all duration-300">
+      <div className="h-20 max-w-[1200px] mx-auto bg-surface-container-lowest/90 backdrop-blur-xl rounded-full px-space-md lg:px-space-lg flex items-center justify-between shadow-[0_12px_32px_-4px_rgba(15,46,51,0.06)] border border-white/60">
         {/* Brand Monogram & Name */}
         <Link
           href="/"
-          className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full pr-2"
+          className="flex items-center gap-space-sm hover:opacity-90 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full pr-2"
         >
-          <div className="w-10 h-10 rounded-full bg-theme-primary/10 border border-theme-border flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
-            {/* Elegant Monoline Tooth Icon */}
-            <svg
-              className="w-5 h-5 text-primary"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 2C7.5 2 4 4.5 4 8.5C4 11.5 5.5 13.5 6.5 15.5C7.5 17.5 8 21.5 10 22C11 22.25 11.5 20 12 18C12.5 20 13 22.25 14 22C16 21.5 16.5 17.5 17.5 15.5C18.5 13.5 20 11.5 20 8.5C20 4.5 16.5 2 12 2Z" />
-            </svg>
+          <div className="relative h-8 w-8 shrink-0">
+            <Image
+              src={STITCH_LOGO_URL}
+              alt="Gangal Dental Clinic Monogram"
+              width={32}
+              height={32}
+              className="h-8 w-auto object-contain"
+              priority
+            />
           </div>
-          <div className="flex flex-col">
-            <span className="font-serif text-[19px] sm:text-[22px] font-normal tracking-tight text-primary leading-tight">
-              {siteConfig.name}
-            </span>
-            <span className="hidden sm:inline font-sans text-[11px] uppercase tracking-[0.14em] text-theme-muted font-medium">
-              Manpada · Thane
-            </span>
-          </div>
+          <span className="font-headline-sm text-headline-sm text-primary tracking-tight">
+            {siteConfig.name}
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-7">
-          {siteConfig.navLinks.map((link) => {
-            const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
+        <nav className="hidden lg:flex items-center gap-space-lg" aria-label="Main Navigation">
+          {navItems.map((item) => {
+            const isActive =
+              item.href.startsWith('/#')
+                ? pathname === '/'
+                : pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <Link
-                key={link.href}
-                href={link.href}
-                className={`font-sans text-[15px] transition-colors py-1 ${
+                key={item.label}
+                href={item.href}
+                className={`font-body-md text-body-md transition-colors py-1 ${
                   isActive
-                    ? 'text-primary font-semibold border-b-2 border-primary'
-                    : 'text-theme-muted hover:text-primary font-normal'
+                    ? 'text-primary font-bold'
+                    : 'text-on-surface-variant hover:text-primary font-normal'
                 }`}
               >
-                {link.label}
+                {item.label}
               </Link>
             );
           })}
         </nav>
 
         {/* Header Right Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-space-sm">
           <ThemeToggle />
-
-          <a
-            href={siteConfig.contact.landlineTel}
-            className="hidden md:inline-flex items-center gap-2 text-theme-muted hover:text-primary font-sans text-[14px] px-3 py-2 rounded-full hover:bg-theme-container/50 transition-colors"
-            title="Call Gangal Dental Clinic"
-          >
-            <Phone className="w-4 h-4 text-primary" />
-            <span className="font-medium">{siteConfig.contact.landline}</span>
-          </a>
 
           <Link
             href="/book"
-            className="hidden sm:inline-flex items-center gap-2 min-h-[46px] px-6 rounded-full bg-primary text-white font-sans text-[14px] font-medium tracking-wide shadow-button hover:bg-theme-primary-container interactive-button"
+            className="interactive-button hidden sm:inline-flex items-center justify-center min-h-[48px] px-space-lg rounded-full bg-primary text-on-primary font-label-button text-label-button shadow-[0_4px_16px_-2px_rgba(0,82,85,0.25)] hover:bg-primary-container hover:text-on-primary transition-all duration-300"
           >
-            <Calendar className="w-4 h-4" />
-            <span>Book Visit</span>
+            Book Appointment
           </Link>
 
-          {/* Mobile Menu Trigger */}
+          <Link
+            href="/admin"
+            className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-sm hover:opacity-90 transition-opacity"
+            title="Reception & Staff Dashboard"
+            aria-label="Staff Portal"
+          >
+            <span className="material-symbols-outlined text-on-primary text-[18px]">person</span>
+          </Link>
+
+          {/* Mobile Menu Button */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-full text-primary hover:bg-theme-container/60 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            aria-label="Toggle Navigation Menu"
+            className="lg:hidden w-10 h-10 flex items-center justify-center rounded-full text-primary hover:bg-surface-container transition-colors focus:outline-none"
+            aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
             aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -112,48 +111,74 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden max-w-[1200px] mx-auto mt-2 bg-theme-card/95 backdrop-blur-2xl rounded-[28px] p-6 shadow-ambient border border-theme-border animate-in fade-in slide-in-from-top-4 duration-200">
-          <nav className="flex flex-col gap-3">
-            {siteConfig.navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
+        <div className="lg:hidden fixed inset-0 z-50 bg-on-background/30 backdrop-blur-sm transition-opacity">
+          <div className="fixed top-0 left-0 bottom-0 w-72 max-w-[85vw] bg-surface-container-lowest shadow-2xl flex flex-col pt-safe pb-safe z-50 animate-in slide-in-from-left duration-300">
+            <div className="h-20 px-space-md flex items-center justify-between border-b border-surface-container-low">
+              <div className="flex flex-col">
+                <span className="font-headline-sm text-headline-sm text-primary">Gangal Clinic</span>
+                <span className="font-label-caption text-label-caption text-secondary">Gentle Care Studio</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors"
+                aria-label="Close menu"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="px-space-md py-space-sm">
+              <p className="font-label-caption text-label-caption text-secondary italic">
+                Warm, calming dentistry tailored for anxious minds.
+              </p>
+            </div>
+
+            <nav className="flex-1 overflow-y-auto px-space-sm py-space-xs flex flex-col gap-1">
+              {navItems.map((item) => (
                 <Link
-                  key={link.href}
-                  href={link.href}
+                  key={item.label}
+                  href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`px-4 py-3 rounded-2xl text-[16px] font-sans transition-colors ${
-                    isActive
-                      ? 'bg-primary text-white font-semibold'
-                      : 'text-theme-ink hover:bg-theme-container/50 font-normal'
+                  className={`flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface transition-colors ${
+                    pathname === item.href ? 'bg-surface-container text-primary font-bold' : ''
                   }`}
                 >
-                  {link.label}
+                  <span className="font-label-button text-label-button">{item.label}</span>
                 </Link>
-              );
-            })}
-            <div className="pt-4 mt-2 border-t border-theme-border/50 flex flex-col gap-3">
-              <a
-                href={siteConfig.contact.landlineTel}
-                className="flex items-center justify-center gap-2 py-3 rounded-full bg-theme-container-low text-primary font-medium text-[15px]"
+              ))}
+              <Link
+                href="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-secondary hover:text-primary transition-colors border-t border-surface-container-low mt-2 pt-3"
               >
-                <Phone className="w-4 h-4" />
-                <span>Call {siteConfig.contact.landline}</span>
-              </a>
+                <span className="material-symbols-outlined text-[20px]">badge</span>
+                <span className="font-label-button text-label-button">Staff Portal</span>
+              </Link>
+            </nav>
+
+            <div className="p-space-md flex flex-col gap-space-sm border-t border-surface-container-low">
               <Link
                 href="/book"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 py-3 rounded-full bg-primary text-white font-medium text-[15px] shadow-button"
+                className="w-full h-12 rounded-full bg-primary text-on-primary font-label-button text-label-button flex items-center justify-center gap-space-xs shadow-md active:scale-95 transition-transform"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Book Appointment</span>
               </Link>
+              <a
+                href="tel:02225891949"
+                className="w-full h-12 rounded-full bg-surface-container text-primary font-label-button text-label-button flex items-center justify-center gap-space-xs hover:bg-surface-container-high transition-colors"
+              >
+                <Phone className="w-4 h-4" />
+                <span>022 2589 1949</span>
+              </a>
             </div>
-          </nav>
+          </div>
         </div>
       )}
     </header>
   );
 }
-
