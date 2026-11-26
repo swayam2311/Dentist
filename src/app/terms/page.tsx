@@ -35,7 +35,7 @@ export default function TermsPage() {
         <section>
           <h2 className="font-serif text-[22px] text-primary font-normal mb-2">3. Cancellations &amp; Rescheduling</h2>
           <p>
-            If you need to reschedule or cancel your reservation, we kindly ask for at least 4 hours notice whenever possible so our staff may allocate the operatory suite to urgent cases. You may cancel via the online status portal or by calling reception at 022 25891949.
+            If you need to reschedule or cancel your reservation, we kindly ask for at least 4 hours notice whenever possible so our staff may allocate the operatory suite to urgent cases. You may reschedule or cancel by messaging us on WhatsApp (+91 99870 76628) or calling reception at 022 25891949.
           </p>
         </section>
 
