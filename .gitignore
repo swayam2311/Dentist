@@ -4,25 +4,43 @@ stitch_gangal_dental_clinic_design_system/
 # Dependencies
 node_modules/
 .pnpm-store/
+.npm/
+.pnp.*
 
-# Next.js build
+# Next.js & TypeScript build / caches
 .next/
 out/
 build/
 dist/
+.swc/
+.turbo/
+.eslintcache
+*.tsbuildinfo
+next-env.d.ts
 
-# Environment variables
+# Testing & Coverage
+coverage/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+playwright/.auth/
+.lighthouseci/
+
+# Environment variables (keep .env.example)
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+!.env.example
 
-# Logs
+# Logs & Temp files
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+*.tmp
+*.bak
 
 # Vercel
 .vercel/
@@ -30,13 +48,9 @@ pnpm-debug.log*
 # OS / Editor
 .DS_Store
 Thumbs.db
+Desktop.ini
+~$*
 *.swp
 *.swo
-*.tsbuildinfo
 .vscode/
 .idea/
-
-# Playwright
-test-results/
-playwright-report/
-blob-report/
