@@ -89,3 +89,4 @@
 
 - [ ] **Production Domain & DNS:**
   - *Question for Clinic:* Confirm that the target domain for launch is `gangaldentalclinic.com` and that Vercel DNS CNAME/A records will be configured during cutover.
+

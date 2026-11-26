@@ -1,352 +1,424 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { siteConfig } from '@/config/site.config';
+import {
+  Sparkles,
+  ArrowRight,
+  Shield,
+  VolumeX,
+  HeartHandshake,
+  MessageCircle,
+  Calendar,
+  AlertCircle,
+  Smile,
+  Activity,
+  Heart,
+  Search,
+} from 'lucide-react';
 
-type CategoryFilter = 'all' | 'general' | 'cosmetic' | 'implants' | 'orthodontics' | 'restorative' | 'children';
+type CategoryFilter = 'all' | 'general' | 'restorative' | 'cosmetic' | 'orthodontics' | 'children';
 
-interface TreatmentItem {
-  id: string;
-  title: string;
-  categoryLabel: string;
-  categories: CategoryFilter[];
-  description: string;
-  icon: string;
-  badge: string;
-  iconBg: string;
-  iconColor: string;
+interface CategoryOption {
+  id: CategoryFilter;
+  label: string;
 }
 
-const TREATMENTS_LIST: TreatmentItem[] = [
-  {
-    id: 'free-consultation',
-    title: 'Free Oral Health Consultation',
-    categoryLabel: 'General · Preventive',
-    categories: ['general'],
-    description: 'Complimentary 3D digital scan, cancer screening, and custom zero-obligation care roadmap.',
-    icon: 'clinical_notes',
-    badge: 'Zero Obligation',
-    iconBg: 'bg-secondary-container',
-    iconColor: 'text-primary',
-  },
+const CATEGORIES: CategoryOption[] = [
+  { id: 'all', label: 'All Treatments' },
+  { id: 'general', label: 'General Care' },
+  { id: 'restorative', label: 'Restorative & Implants' },
+  { id: 'cosmetic', label: 'Cosmetic & Smile' },
+  { id: 'orthodontics', label: 'Invisalign & Aligners' },
+  { id: 'children', label: 'Pediatric Care' },
+];
+
+interface TreatmentCard {
+  id: string;
+  slug: string;
+  title: string;
+  category: CategoryFilter;
+  categoryLabel: string;
+  description: string;
+  icon: React.ReactNode;
+}
+
+const TREATMENTS: TreatmentCard[] = [
   {
     id: 'emergency-care',
-    title: 'Emergency Care',
-    categoryLabel: 'Urgent · General',
-    categories: ['general'],
-    description: 'Same-day priority relief for acute toothaches, cracked enamel, or sudden dental trauma.',
-    icon: 'e911_emergency',
-    badge: 'Priority Same-Day',
-    iconBg: 'bg-error-container/70',
-    iconColor: 'text-error',
+    slug: 'emergency-care',
+    title: 'Emergency Care & Pain Relief',
+    category: 'general',
+    categoryLabel: 'General Care',
+    description: 'Prompt same-day evaluation for acute toothaches, chipped enamel, and urgent dental concerns.',
+    icon: <AlertCircle className="w-6 h-6 text-error" aria-hidden="true" />,
   },
   {
-    id: 'root-canal',
+    id: 'root-canal-treatment',
+    slug: 'root-canal-treatment',
     title: 'Root Canal Treatment',
-    categoryLabel: 'Restorative',
-    categories: ['restorative'],
-    description: 'Microscopic single-sitting endodontics designed to save your natural tooth painlessly.',
-    icon: 'vital_signs',
-    badge: 'Single-Sitting',
-    iconBg: 'bg-secondary-container',
-    iconColor: 'text-primary',
-  },
-  {
-    id: 'extractions',
-    title: 'Tooth Extraction',
-    categoryLabel: 'Restorative · Surgery',
-    categories: ['restorative'],
-    description: 'Gentle atraumatic extractions and wisdom tooth removal under profound local numbing.',
-    icon: 'healing',
-    badge: 'Atraumatic Comfort',
-    iconBg: 'bg-secondary-container',
-    iconColor: 'text-primary',
-  },
-  {
-    id: 'teeth-whitening',
-    title: 'Teeth Whitening',
-    categoryLabel: 'Cosmetic',
-    categories: ['cosmetic'],
-    description: 'In-clinic power whitening and custom take-home trays formulated for minimal sensitivity.',
-    icon: 'flare',
-    badge: 'Sensitivity Safe',
-    iconBg: 'bg-tertiary-fixed',
-    iconColor: 'text-tertiary',
-  },
-  {
-    id: 'porcelain-veneers',
-    title: 'Porcelain Veneers',
-    categoryLabel: 'Cosmetic',
-    categories: ['cosmetic'],
-    description: 'Ultra-thin biomimetic ceramic shells crafted for radiant, naturally balanced smiles.',
-    icon: 'diamond',
-    badge: 'Hand-Layered',
-    iconBg: 'bg-tertiary-fixed',
-    iconColor: 'text-tertiary',
-  },
-  {
-    id: 'smile-makeover',
-    title: 'Smile Makeover',
-    categoryLabel: 'Cosmetic',
-    categories: ['cosmetic'],
-    description: 'Holistic digital smile design aligning tooth proportion, gum contours, and facial harmony.',
-    icon: 'sentiment_satisfied',
-    badge: 'Digital Simulation',
-    iconBg: 'bg-tertiary-fixed',
-    iconColor: 'text-tertiary',
+    category: 'restorative',
+    categoryLabel: 'Restorative Care',
+    description: 'Conservative endodontic therapy designed to save your natural tooth with gentle local anaesthesia.',
+    icon: <Activity className="w-6 h-6 text-primary" aria-hidden="true" />,
   },
   {
     id: 'dental-implants',
+    slug: 'dental-implants',
     title: 'Dental Implants',
-    categoryLabel: 'Implants',
-    categories: ['implants', 'restorative'],
-    description: 'Grade-IV bio-inert titanium posts with computer-guided placement for permanent teeth.',
-    icon: 'verified',
-    badge: 'High Durability',
-    iconBg: 'bg-secondary-container',
-    iconColor: 'text-primary',
+    category: 'restorative',
+    categoryLabel: 'Restorative Care',
+    description: 'Durable tooth replacements to restore natural chewing function, jawbone health, and aesthetic balance.',
+    icon: <Shield className="w-6 h-6 text-primary" aria-hidden="true" />,
   },
   {
     id: 'invisalign',
-    title: 'Invisalign',
+    slug: 'invisalign',
+    title: 'Invisalign Clear Aligners',
+    category: 'orthodontics',
     categoryLabel: 'Orthodontics',
-    categories: ['orthodontics'],
-    description: 'Virtually invisible, removable clear aligners custom planned for teens and adults.',
-    icon: 'auto_fix_high',
-    badge: 'Discreet · Removable',
-    iconBg: 'bg-secondary-container',
-    iconColor: 'text-primary',
+    description: 'Discreet, removable clear aligners changed about every 2 weeks to gently guide teeth into alignment.',
+    icon: <Sparkles className="w-6 h-6 text-primary" aria-hidden="true" />,
   },
   {
-    id: 'crowns-bridges',
-    title: 'Crowns and Bridges',
-    categoryLabel: 'Restorative',
-    categories: ['restorative'],
-    description: 'High-translucency monolithic zirconia and ceramic restorations fabricated to last.',
-    icon: 'architecture',
-    badge: 'Zirconia Precision',
-    iconBg: 'bg-secondary-container',
-    iconColor: 'text-primary',
+    id: 'teeth-whitening',
+    slug: 'teeth-whitening',
+    title: 'Teeth Whitening',
+    category: 'cosmetic',
+    categoryLabel: 'Cosmetic',
+    description: 'Carefully monitored in-office and take-home whitening formulated to minimize enamel sensitivity.',
+    icon: <Sparkles className="w-6 h-6 text-primary" aria-hidden="true" />,
+  },
+  {
+    id: 'porcelain-veneers',
+    slug: 'porcelain-veneers',
+    title: 'Porcelain Veneers',
+    category: 'cosmetic',
+    categoryLabel: 'Cosmetic',
+    description: 'Ultra-thin custom ceramic shells crafted to refine tooth shade, symmetry, and smile aesthetics.',
+    icon: <Smile className="w-6 h-6 text-primary" aria-hidden="true" />,
+  },
+  {
+    id: 'digital-smile-design',
+    slug: 'digital-smile-design',
+    title: 'Digital Smile Design',
+    category: 'cosmetic',
+    categoryLabel: 'Cosmetic',
+    description: 'Comprehensive aesthetic planning evaluating facial harmony, lip lines, and tooth proportions.',
+    icon: <Smile className="w-6 h-6 text-primary" aria-hidden="true" />,
+  },
+  {
+    id: 'crowns',
+    slug: 'crowns',
+    title: 'Dental Crowns & Bridges',
+    category: 'restorative',
+    categoryLabel: 'Restorative Care',
+    description: 'Custom ceramic crowns and bridges that reinforce weakened teeth and close missing tooth gaps.',
+    icon: <Shield className="w-6 h-6 text-primary" aria-hidden="true" />,
   },
   {
     id: 'dentures',
-    title: 'Dentures',
-    categoryLabel: 'Restorative · Implants',
-    categories: ['restorative', 'implants'],
-    description: 'Precision-milled lightweight flexible and implant-supported stable full/partial dentures.',
-    icon: 'interests',
-    badge: 'Custom Stabilized',
-    iconBg: 'bg-secondary-container',
-    iconColor: 'text-primary',
+    slug: 'dentures',
+    title: 'Dentures & Maxillofacial Care',
+    category: 'restorative',
+    categoryLabel: 'Restorative Care',
+    description: 'Custom full and partial dentures designed for functional comfort, speech clarity, and natural aesthetics.',
+    icon: <Smile className="w-6 h-6 text-primary" aria-hidden="true" />,
   },
   {
-    id: 'pediatric',
-    title: 'Pediatric Dentistry',
-    categoryLabel: 'Children · Preventive',
-    categories: ['children', 'general'],
-    description: 'Friendly, pressure-free preventive care and fun fluoride therapies tailored for kids.',
-    icon: 'child_care',
-    badge: 'Gentle & Playful',
-    iconBg: 'bg-secondary-container',
-    iconColor: 'text-primary',
+    id: 'white-fillings',
+    slug: 'white-fillings',
+    title: 'Tooth-Coloured White Fillings',
+    category: 'general',
+    categoryLabel: 'General Care',
+    description: 'Bonded aesthetic composite resin restorations that preserve healthy enamel and blend seamlessly.',
+    icon: <Sparkles className="w-6 h-6 text-primary" aria-hidden="true" />,
+  },
+  {
+    id: 'broken-teeth',
+    slug: 'broken-teeth',
+    title: 'Broken & Worn Teeth Repair',
+    category: 'restorative',
+    categoryLabel: 'Restorative Care',
+    description: 'Conservative restoration for chipped, cracked, or severely ground teeth to rebuild bite stability.',
+    icon: <Shield className="w-6 h-6 text-primary" aria-hidden="true" />,
+  },
+  {
+    id: 'pediatric-dentistry',
+    slug: 'pediatric-dentistry',
+    title: 'Pediatric Dental Care',
+    category: 'children',
+    categoryLabel: 'Pediatric Care',
+    description: 'Encouraging, patient first visits, preventive fluoride, and gentle cavity prevention for children.',
+    icon: <Heart className="w-6 h-6 text-primary" aria-hidden="true" />,
+  },
+  {
+    id: 'preventative-dentistry',
+    slug: 'preventative-dentistry',
+    title: 'Preventative Dentistry & Hygiene',
+    category: 'general',
+    categoryLabel: 'General Care',
+    description: 'Gentle ultrasonic cleaning, plaque removal, and periodontal health assessments to preserve teeth.',
+    icon: <Activity className="w-6 h-6 text-primary" aria-hidden="true" />,
   },
 ];
 
-export default function TreatmentsPage() {
-  const [activeFilter, setActiveFilter] = useState<CategoryFilter>('all');
+function TreatmentsCatalogContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const filterParam = searchParams.get('filter') as CategoryFilter | null;
 
-  const filteredTreatments =
-    activeFilter === 'all'
-      ? TREATMENTS_LIST
-      : TREATMENTS_LIST.filter((t) => t.categories.includes(activeFilter));
+  const [activeFilter, setActiveFilter] = useState<CategoryFilter>(
+    filterParam && CATEGORIES.some((c) => c.id === filterParam) ? filterParam : 'all'
+  );
 
-  const filterButtons: { label: string; filter: CategoryFilter }[] = [
-    { label: 'All', filter: 'all' },
-    { label: 'General', filter: 'general' },
-    { label: 'Cosmetic', filter: 'cosmetic' },
-    { label: 'Implants', filter: 'implants' },
-    { label: 'Orthodontics', filter: 'orthodontics' },
-    { label: 'Restorative', filter: 'restorative' },
-    { label: 'Children', filter: 'children' },
-  ];
+  useEffect(() => {
+    if (filterParam && CATEGORIES.some((c) => c.id === filterParam)) {
+      setActiveFilter(filterParam);
+    }
+  }, [filterParam]);
+
+  const handleFilterChange = (filterId: CategoryFilter) => {
+    setActiveFilter(filterId);
+    if (filterId === 'all') {
+      router.push('/treatments', { scroll: false });
+    } else {
+      router.push(`/treatments?filter=${filterId}`, { scroll: false });
+    }
+  };
+
+  const filtered = activeFilter === 'all'
+    ? TREATMENTS
+    : TREATMENTS.filter((t) => t.category === activeFilter);
 
   return (
-    <div className="flex flex-col w-full text-on-surface">
-      {/* Atmospheric Sanctuary Ambient Background Elements */}
-      <div className="relative w-full max-w-[1240px] mx-auto px-margin-mobile lg:px-margin">
-        {/* Hero / Intro Section */}
-        <section className="pt-space-xl pb-space-lg lg:pt-16 lg:pb-space-xl flex flex-col items-center text-center relative">
-          {/* Diffuse warm atmospheric glows */}
-          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary-fixed/30 rounded-full blur-3xl pointer-events-none -z-10" />
-          <div className="absolute -top-12 right-12 w-64 h-64 bg-tertiary-fixed/35 rounded-full blur-2xl pointer-events-none -z-10" />
-
-          {/* Eyebrow Tag */}
-          <div className="inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-secondary-container/60 mb-space-sm backdrop-blur-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            <span className="font-label-eyebrow text-label-eyebrow text-secondary uppercase tracking-[0.16em]">
-              Our Clinical Expertise &amp; Services
-            </span>
+    <main id="main-content" className="w-full relative py-12 lg:py-20">
+      <div className="max-w-[1200px] mx-auto px-margin-mobile lg:px-margin">
+        {/* Editorial Eyebrow & Headline */}
+        <section className="text-center max-w-3xl mx-auto mb-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-container text-primary font-label-eyebrow text-label-eyebrow uppercase tracking-widest mb-3">
+            <span className="w-2 h-2 rounded-full bg-primary" aria-hidden="true" />
+            <span>Gentle &amp; Conservative Dentistry</span>
           </div>
-
-          {/* Main Headline */}
-          <h1 className="font-headline-lg lg:font-display-hero text-headline-lg lg:text-display-hero text-primary max-w-3xl tracking-tight mb-space-sm font-normal">
-            Care for every smile, in one place
+          <h1 className="font-serif text-[36px] sm:text-[48px] text-primary tracking-tight font-normal leading-tight mb-4">
+            Care for every smile, in one unhurried clinic
           </h1>
-
-          {/* Calming Subtext */}
-          <p className="font-body-xl text-body-xl text-on-surface-variant max-w-2xl font-normal leading-relaxed mb-space-lg">
-            Thoughtful, gentle dental treatments delivered with modern precision and unhurried sensory care in Manpada, Thane. Transparent pricing and zero-judgment consultations.
+          <p className="font-sans text-[16px] text-on-surface-variant leading-relaxed max-w-2xl mx-auto">
+            From preventive hygiene and smile aesthetics to complex restorative implantology in Manpada, Thane. Clear explanations, transparent estimates, and zero pressure.
           </p>
-
-          {/* Reassurance Pill */}
-          <div className="inline-flex items-center gap-space-xs px-space-lg py-space-xs rounded-full bg-surface-container-lowest shadow-[0_8px_24px_-4px_rgba(0,82,85,0.08)] max-w-full overflow-hidden text-left border border-white/60">
-            <span className="text-tertiary text-[18px] shrink-0">✨</span>
-            <p className="font-label-caption text-label-caption text-on-surface-variant truncate sm:overflow-visible">
-              All procedures performed in soundproof private suites with topical numbing and warm sensory comfort.
-            </p>
-          </div>
         </section>
 
-        {/* Interactive Category Filter Bar */}
-        <section className="pb-space-xl flex justify-center">
-          <div
-            className="flex items-center gap-2 p-1.5 bg-surface-container-lowest/80 backdrop-blur-md rounded-full shadow-[0_8px_24px_-4px_rgba(15,46,51,0.04)] overflow-x-auto max-w-full scrollbar-none border border-white/60"
-            id="filter-container"
+        {/* Free Consultation Banner / CTA Ribbon (Promoted out of grid) */}
+        <div className="bg-surface-container-lowest rounded-card p-6 sm:p-8 border border-theme-border/60 shadow-ambient mb-12 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="max-w-xl text-left">
+            <span className="font-label-eyebrow text-label-eyebrow text-secondary uppercase tracking-widest block mb-1">
+              Complimentary First Step
+            </span>
+            <h2 className="font-serif text-[24px] sm:text-[28px] text-primary font-normal leading-snug mb-1">
+              Free Oral Health Consultation
+            </h2>
+            <p className="font-sans text-[14px] text-on-surface-variant leading-relaxed">
+              Every new patient journey begins with an unhurried clinical evaluation. We examine your teeth, listen to your concerns, and provide a clear written treatment estimate with zero obligation.
+            </p>
+          </div>
+          <Link
+            href="/book?service=free-consultation"
+            className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-full bg-primary text-on-primary font-label-button text-label-button shadow-sm hover:bg-primary-container transition-colors shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary w-full md:w-auto"
           >
-            {filterButtons.map((btn) => {
-              const isActive = activeFilter === btn.filter;
+            <Calendar className="w-4 h-4" aria-hidden="true" />
+            <span>Book Free Consultation</span>
+          </Link>
+        </div>
+
+        {/* Interactive Filter Pills */}
+        <section className="flex items-center justify-center mb-10 overflow-x-auto pb-2" aria-label="Treatment Categories">
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 p-1.5 bg-surface-container rounded-full max-w-full">
+            {CATEGORIES.map((cat) => {
+              const isActive = activeFilter === cat.id;
               return (
                 <button
-                  key={btn.filter}
-                  onClick={() => setActiveFilter(btn.filter)}
-                  className={`filter-btn px-space-lg py-2 rounded-full font-label-button text-label-button transition-all duration-300 ${
+                  key={cat.id}
+                  type="button"
+                  aria-pressed={isActive}
+                  onClick={() => handleFilterChange(cat.id)}
+                  className={`min-h-[40px] px-5 rounded-full font-label-button text-[13px] font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                     isActive
-                      ? 'bg-primary text-on-primary shadow-sm hover:shadow'
-                      : 'text-on-surface hover:text-primary hover:bg-surface-container-low'
+                      ? 'bg-primary text-on-primary shadow-sm'
+                      : 'text-on-surface hover:text-primary hover:bg-surface-container-lowest'
                   }`}
-                  data-filter={btn.filter}
                 >
-                  {btn.label}
+                  {cat.label}
                 </button>
               );
             })}
           </div>
         </section>
 
-        {/* Treatments 12-Card Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter mb-space-xl" id="treatments-grid">
-          {filteredTreatments.map((t) => (
-            <article
-              key={t.id}
-              className="treatment-card group flex flex-col justify-between bg-surface-container-lowest rounded-lg p-space-lg shadow-[0_12px_32px_-4px_rgba(15,46,51,0.05),0_4px_12px_-2px_rgba(15,46,51,0.02)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_40px_-6px_rgba(0,82,85,0.12)] border border-white/60"
-              data-categories={t.categories.join(' ')}
-            >
-              <div>
-                <div className="flex items-center justify-between mb-space-md">
-                  <div
-                    className={`w-12 h-12 rounded-full ${t.iconBg} flex items-center justify-center ${t.iconColor} group-hover:scale-105 transition-transform`}
-                  >
-                    <span className="material-symbols-outlined text-[24px]">{t.icon}</span>
+        {/* Treatments Grid */}
+        <section aria-label="Treatments List" className="mb-16">
+          {filtered.length === 0 ? (
+            <div className="bg-surface-container-lowest rounded-card p-12 text-center border border-theme-border/60 max-w-md mx-auto">
+              <Search className="w-10 h-10 text-theme-muted mx-auto mb-3" aria-hidden="true" />
+              <h3 className="font-serif text-[20px] text-primary mb-1">No treatments in this category</h3>
+              <p className="font-sans text-[14px] text-on-surface-variant mb-4">
+                Please select another category or view all our clinical services.
+              </p>
+              <button
+                type="button"
+                onClick={() => handleFilterChange('all')}
+                className="px-5 py-2.5 rounded-full bg-primary text-on-primary font-label-button text-[13px]"
+              >
+                Show All Treatments
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filtered.map((t) => (
+                <article
+                  key={t.id}
+                  id={t.id}
+                  className="bg-surface-container-lowest rounded-card p-6 sm:p-7 border border-theme-border/60 shadow-ambient hover:shadow-ambient-hover transition-all duration-300 flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+                        {t.icon}
+                      </div>
+                      <span className="font-label-eyebrow text-label-eyebrow text-secondary uppercase tracking-wider px-3 py-1 rounded-full bg-surface-container">
+                        {t.categoryLabel}
+                      </span>
+                    </div>
+
+                    <h2 className="font-headline-sm text-[20px] text-primary mb-2 font-medium group-hover:text-primary-container transition-colors">
+                      {t.title}
+                    </h2>
+                    <p className="font-body-md text-[14px] text-on-surface-variant leading-relaxed mb-6">
+                      {t.description}
+                    </p>
                   </div>
-                  <span className="font-label-eyebrow text-label-eyebrow uppercase px-space-sm py-1 rounded-full bg-surface-container text-secondary">
-                    {t.categoryLabel}
-                  </span>
-                </div>
-                <h2 className="font-headline-sm text-headline-sm text-primary group-hover:text-primary-container transition-colors mb-space-xs font-medium">
-                  {t.title}
-                </h2>
-                <p className="font-body-md text-body-md text-on-surface-variant font-normal leading-relaxed mb-space-lg">
-                  {t.description}
+
+                  <div className="pt-4 border-t border-theme-border/40 flex items-center justify-between">
+                    <Link
+                      href={`/book?service=${t.slug}`}
+                      aria-label={`Book ${t.title}`}
+                      className="inline-flex items-center gap-1.5 font-label-button text-[14px] text-primary hover:underline underline-offset-4 font-semibold group-hover:text-primary-container transition-colors"
+                    >
+                      <span>Book this care</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                    </Link>
+                    <Link
+                      href={`/treatments/${t.slug}`}
+                      className="text-[13px] font-sans text-secondary hover:text-primary transition-colors"
+                    >
+                      Learn more
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
+
+        {/* Comfort-Focused Care Principles (Required H2 above comfort features) */}
+        <section className="mb-16">
+          <div className="text-center mb-8 max-w-xl mx-auto">
+            <span className="font-label-eyebrow text-label-eyebrow text-secondary uppercase tracking-widest block mb-1">
+              Patient Comfort
+            </span>
+            <h2 className="font-serif text-[26px] sm:text-[32px] text-primary font-normal leading-tight">
+              Comfort-Focused Care Principles
+            </h2>
+            <p className="font-sans text-[14px] text-on-surface-variant mt-1">
+              Every procedure is adapted to your individual comfort boundaries.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-surface-container rounded-card p-6 sm:p-7 border border-theme-border/40 flex items-start gap-4">
+              <VolumeX className="w-6 h-6 text-primary shrink-0 mt-0.5" aria-hidden="true" />
+              <div>
+                <h3 className="font-headline-sm text-[18px] text-primary mb-1 font-medium">
+                  Acoustic Calm
+                </h3>
+                <p className="font-body-md text-[13px] text-on-surface-variant leading-relaxed">
+                  Quiet, enclosed treatment operatories designed to minimize clinic sounds and drill noise.
                 </p>
               </div>
+            </div>
 
-              <div className="pt-space-xs flex items-center justify-between border-t border-surface-container-high/40">
-                <Link
-                  href={`/book?service=${encodeURIComponent(t.title)}`}
-                  className="inline-flex items-center gap-1.5 font-label-button text-label-button text-primary group-hover:text-primary-container hover:underline underline-offset-4 transition-all"
-                >
-                  <span>Book this care</span>
-                  <span className="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">
-                    arrow_forward
-                  </span>
-                </Link>
-                <span className="font-label-caption text-label-caption text-secondary/80 font-medium">
-                  {t.badge}
-                </span>
+            <div className="bg-surface-container rounded-card p-6 sm:p-7 border border-theme-border/40 flex items-start gap-4">
+              <Sparkles className="w-6 h-6 text-primary shrink-0 mt-0.5" aria-hidden="true" />
+              <div>
+                <h3 className="font-headline-sm text-[18px] text-primary mb-1 font-medium">
+                  Gentle Local Anaesthesia
+                </h3>
+                <p className="font-body-md text-[13px] text-on-surface-variant leading-relaxed">
+                  Topical pre-numbing gels applied prior to any injection to ensure maximum comfort.
+                </p>
               </div>
-            </article>
-          ))}
-        </section>
-
-        {/* Experience Reassurance Editorial Ribbon */}
-        <section className="mb-space-xl grid grid-cols-1 md:grid-cols-3 gap-gutter">
-          <div className="bg-surface-container-low p-space-lg rounded-lg flex items-start gap-space-sm border border-white/40">
-            <span className="material-symbols-outlined text-primary text-[28px] mt-0.5">volume_off</span>
-            <div>
-              <h3 className="font-headline-sm text-headline-sm text-primary mb-1 font-medium">Acoustic Serenity</h3>
-              <p className="font-body-md text-body-md text-on-surface-variant">
-                Sound-softened operatory suites designed to eliminate clinical drill noise.
-              </p>
             </div>
-          </div>
 
-          <div className="bg-surface-container-low p-space-lg rounded-lg flex items-start gap-space-sm border border-white/40">
-            <span className="material-symbols-outlined text-primary text-[28px] mt-0.5">spa</span>
-            <div>
-              <h3 className="font-headline-sm text-headline-sm text-primary mb-1 font-medium">Topical Pre-Numbing</h3>
-              <p className="font-body-md text-body-md text-on-surface-variant">
-                Compound warming gels applied before any anesthetic for a pinch-free experience.
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-surface-container-low p-space-lg rounded-lg flex items-start gap-space-sm border border-white/40">
-            <span className="material-symbols-outlined text-primary text-[28px] mt-0.5">handshake</span>
-            <div>
-              <h3 className="font-headline-sm text-headline-sm text-primary mb-1 font-medium">Patient-Controlled Pace</h3>
-              <p className="font-body-md text-body-md text-on-surface-variant">
-                Simple non-verbal hand signals ensure you can pause treatment at any second.
-              </p>
+            <div className="bg-surface-container rounded-card p-6 sm:p-7 border border-theme-border/40 flex items-start gap-4">
+              <HeartHandshake className="w-6 h-6 text-primary shrink-0 mt-0.5" aria-hidden="true" />
+              <div>
+                <h3 className="font-headline-sm text-[18px] text-primary mb-1 font-medium">
+                  Patient-Controlled Pacing
+                </h3>
+                <p className="font-body-md text-[13px] text-on-surface-variant leading-relaxed">
+                  You can pause treatment at any moment. Our clinicians move at your pace, not the clock.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Gentle CTA Banner */}
-        <section className="mb-space-xl relative overflow-hidden bg-surface-container-lowest rounded-xl p-space-xl md:p-14 shadow-[0_16px_40px_-8px_rgba(0,82,85,0.08)] border border-white/80">
-          <div className="absolute -right-16 -bottom-16 w-80 h-80 rounded-full bg-secondary-container/40 pointer-events-none -z-0" />
-          <div className="absolute -left-12 -top-12 w-64 h-64 rounded-full bg-tertiary-fixed/30 pointer-events-none -z-0" />
-
-          <div className="relative z-10 max-w-2xl">
-            <span className="font-label-eyebrow text-label-eyebrow text-tertiary uppercase tracking-widest block mb-space-xs font-semibold">
-              Personalized Guidance
-            </span>
-            <h2 className="font-headline-lg text-headline-lg text-primary mb-space-sm leading-tight font-normal">
-              Unsure which treatment is right for you?
-            </h2>
-            <p className="font-body-xl text-body-xl text-on-surface-variant font-normal leading-relaxed mb-space-lg">
-              Book a gentle 20-minute discussion with Dr. Anand Gangal. We examine, listen, and explain all alternatives before touching an instrument.
-            </p>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-md">
-              <Link
-                href="/book"
-                className="inline-flex items-center justify-center min-h-[52px] px-space-xl rounded-full bg-primary text-on-primary font-label-button text-label-button shadow-[0_8px_20px_-2px_rgba(0,82,85,0.25)] hover:bg-primary-container transition-all duration-300 hover:-translate-y-0.5"
-              >
-                Book Free Consultation
-              </Link>
-              <a
-                href={siteConfig.contact.whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center min-h-[52px] px-space-lg rounded-full bg-surface-container text-on-surface font-label-button text-label-button hover:bg-surface-container-high transition-all duration-300 gap-2"
-              >
-                <span className="material-symbols-outlined text-[20px] text-secondary">chat</span>
-                <span>Chat on WhatsApp</span>
-              </a>
-            </div>
+        {/* Personalized Discussion Banner */}
+        <section className="bg-surface-container-lowest rounded-card p-8 sm:p-12 border border-theme-border/60 shadow-ambient text-center max-w-3xl mx-auto">
+          <span className="font-label-eyebrow text-label-eyebrow text-secondary uppercase tracking-widest block mb-2">
+            Personalized Guidance
+          </span>
+          <h2 className="font-serif text-[28px] sm:text-[34px] text-primary font-normal leading-tight mb-3">
+            Unsure which treatment is right for you?
+          </h2>
+          <p className="font-sans text-[15px] text-on-surface-variant max-w-xl mx-auto mb-8 leading-relaxed">
+            Schedule an unhurried conversation with Dr. Anand Gangal. We examine, explain alternatives in plain language, and answer every question before starting any procedure.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Link
+              href="/book"
+              className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 rounded-full bg-primary text-on-primary font-label-button text-label-button shadow-sm hover:bg-primary-container transition-colors w-full sm:w-auto"
+            >
+              <Calendar className="w-4 h-4" aria-hidden="true" />
+              <span>Book an Appointment</span>
+            </Link>
+            <a
+              href={siteConfig.contact.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-full bg-secondary-container text-on-secondary-container font-label-button text-label-button hover:bg-secondary-fixed transition-colors w-full sm:w-auto"
+            >
+              <MessageCircle className="w-4 h-4" aria-hidden="true" />
+              <span>Message on WhatsApp</span>
+            </a>
           </div>
         </section>
       </div>
-    </div>
+    </main>
+  );
+}
+
+export default function TreatmentsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="py-24 text-center font-sans text-on-surface-variant">
+          Loading treatment options...
+        </div>
+      }
+    >
+      <TreatmentsCatalogContent />
+    </Suspense>
   );
 }
