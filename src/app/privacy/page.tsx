@@ -60,7 +60,7 @@ export default function PrivacyPolicyPage() {
         <section>
           <h2 className="font-serif text-[22px] text-primary font-normal mb-2">5. Data Protection Officer &amp; Inquiries</h2>
           <p>
-            If you have questions regarding your data privacy or wish to exercise your rights, please contact our clinic administration:
+            If you have questions regarding your data privacy or wish to exercise your rights under the DPDP Act 2023, please contact our clinic team:
           </p>
           <div className="p-4 rounded-2xl bg-theme-container-low/70 border border-theme-border/50 text-[14px] mt-2">
             <p><strong>Gangal Dental Clinic</strong></p>

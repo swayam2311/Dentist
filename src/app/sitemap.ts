@@ -23,14 +23,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/treatments/broken-teeth',
     '/treatments/pediatric-dentistry',
     '/treatments/preventative-dentistry',
+    '/treatments/emergency-care',
     '/book',
-    '/book/status',
     '/our-team',
     '/new-patients',
     '/stories',
     '/contact',
     '/privacy',
     '/terms',
+    '/sensory-care',
+    '/clinical-standards',
   ];
 
   return routes.map((route) => ({
@@ -40,4 +42,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === '' ? 1.0 : route.startsWith('/treatments') ? 0.8 : 0.6,
   }));
 }
-
