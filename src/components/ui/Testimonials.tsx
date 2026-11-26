@@ -91,9 +91,8 @@ export function Testimonials({ items = siteConfig.testimonials, id = 'patient-st
                   aria-selected={idx === activeIndex}
                   aria-label={`View testimonial from ${item.author}`}
                   onClick={() => setActiveIndex(idx)}
-                  className={`h-2.5 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-                    idx === activeIndex ? 'w-8 bg-primary' : 'w-2.5 bg-surface-container hover:bg-theme-border'
-                  }`}
+                  className={`h-2.5 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${idx === activeIndex ? 'w-8 bg-primary' : 'w-2.5 bg-surface-container hover:bg-theme-border'
+                    }`}
                 />
               ))}
             </div>

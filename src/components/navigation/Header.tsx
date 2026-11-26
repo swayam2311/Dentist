@@ -78,11 +78,10 @@ export function Header() {
                 key={item.label}
                 href={item.href}
                 aria-current={isActive ? 'page' : undefined}
-                className={`font-body-md text-body-md transition-colors py-1 ${
-                  isActive
-                    ? 'text-primary font-bold'
-                    : 'text-on-surface-variant hover:text-primary font-normal'
-                }`}
+                className={`font-body-md text-body-md transition-colors py-1 ${isActive
+                  ? 'text-primary font-bold'
+                  : 'text-on-surface-variant hover:text-primary font-normal'
+                  }`}
               >
                 {item.label}
               </Link>
@@ -157,9 +156,8 @@ export function Header() {
                     href={item.href}
                     aria-current={isActive ? 'page' : undefined}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-space-md px-space-md py-3 min-h-[44px] rounded-lg text-on-surface-variant hover:text-on-surface transition-colors ${
-                      isActive ? 'bg-surface-container text-primary font-bold' : ''
-                    }`}
+                    className={`flex items-center gap-space-md px-space-md py-3 min-h-[44px] rounded-lg text-on-surface-variant hover:text-on-surface transition-colors ${isActive ? 'bg-surface-container text-primary font-bold' : ''
+                      }`}
                   >
                     <span className="font-label-button text-label-button">{item.label}</span>
                   </Link>

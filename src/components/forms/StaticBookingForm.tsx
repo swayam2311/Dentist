@@ -230,9 +230,8 @@ ${notes ? `• Patient Notes: ${notes}` : ''}`;
             placeholder="e.g. Asmita Patil"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={`w-full min-h-[48px] px-4 rounded-xl border bg-surface-container-lowest text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${
-              errors.name ? 'border-error ring-1 ring-error' : 'border-theme-border'
-            }`}
+            className={`w-full min-h-[48px] px-4 rounded-xl border bg-surface-container-lowest text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${errors.name ? 'border-error ring-1 ring-error' : 'border-theme-border'
+              }`}
           />
           {errors.name && <p className="text-error text-[13px] mt-1">{errors.name}</p>}
         </div>
@@ -250,9 +249,8 @@ ${notes ? `• Patient Notes: ${notes}` : ''}`;
             placeholder="e.g. 99870 76628"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className={`w-full min-h-[48px] px-4 rounded-xl border bg-surface-container-lowest text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${
-              errors.phone ? 'border-error ring-1 ring-error' : 'border-theme-border'
-            }`}
+            className={`w-full min-h-[48px] px-4 rounded-xl border bg-surface-container-lowest text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${errors.phone ? 'border-error ring-1 ring-error' : 'border-theme-border'
+              }`}
           />
           {errors.phone && <p className="text-error text-[13px] mt-1">{errors.phone}</p>}
         </div>
@@ -311,9 +309,8 @@ ${notes ? `• Patient Notes: ${notes}` : ''}`;
             placeholder="e.g. name@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`w-full min-h-[48px] px-4 rounded-xl border bg-surface-container-lowest text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${
-              errors.email ? 'border-error ring-1 ring-error' : 'border-theme-border'
-            }`}
+            className={`w-full min-h-[48px] px-4 rounded-xl border bg-surface-container-lowest text-on-surface font-body-md text-body-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${errors.email ? 'border-error ring-1 ring-error' : 'border-theme-border'
+              }`}
           />
           {errors.email && <p className="text-error text-[13px] mt-1">{errors.email}</p>}
         </div>
@@ -329,11 +326,10 @@ ${notes ? `• Patient Notes: ${notes}` : ''}`;
                 key={pref}
                 type="button"
                 onClick={() => setReplyPreference(pref)}
-                className={`min-h-[48px] rounded-xl border text-[13px] font-sans font-medium capitalize flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${
-                  replyPreference === pref
-                    ? 'bg-primary text-on-primary border-primary shadow-sm'
-                    : 'bg-surface-container-lowest text-on-surface border-theme-border hover:bg-surface-container'
-                }`}
+                className={`min-h-[48px] rounded-xl border text-[13px] font-sans font-medium capitalize flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${replyPreference === pref
+                  ? 'bg-primary text-on-primary border-primary shadow-sm'
+                  : 'bg-surface-container-lowest text-on-surface border-theme-border hover:bg-surface-container'
+                  }`}
               >
                 {pref}
               </button>
